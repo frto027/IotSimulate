@@ -20,15 +20,28 @@ namespace SimuWindows
     /// </summary>
     public partial class MainWindow : Window
     {
-        
+        GlobalGUIManager GlobalGUIManager = new GlobalGUIManager();
         public MainWindow()
         {
             InitializeComponent();
+            GlobalGUIManager.rootcvs = cvs;
+
+            GlobalGUIManager.BeginDragDraw += BeginDragDraw;
+            GlobalGUIManager.EndDragDraw += EndDragDraw;
         }
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            new ComLedCanvas(cvs);
+            new ComLedCanvas(GlobalGUIManager);
             
+        }
+
+        private void BeginDragDraw(double x,double y)
+        {
+            Console.WriteLine("Begin drag");
+        }
+        private void EndDragDraw()
+        {
+            Console.WriteLine("End drag");
         }
     }
 

@@ -77,8 +77,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ConnectorCanvas.cs" />
     <Compile Include="ComLedCanvas.cs" />
+    <Compile Include="ComCanvas.cs" />
     <Compile Include="DragCanvas.cs" />
+    <Compile Include="GlobalGUIManager.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -126,6 +129,10 @@
     <ProjectReference Include="..\ComLED\ComLED.csproj">
       <Project>{82fe42d8-4e3e-4059-b0d7-78bee91ae49d}</Project>
       <Name>ComLED</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ComVirtualIncreacement\ComVirtualIncreacement.csproj">
+      <Project>{3b6a4f2f-5ae3-4b90-9e7d-f3a77141aa5e}</Project>
+      <Name>ComVirtualIncreacement</Name>
     </ProjectReference>
     <ProjectReference Include="..\IoTSimulate\IoTSimulate.csproj">
       <Project>{6b225dc0-7f9f-4741-9f44-f7b7f7bdde53}</Project>

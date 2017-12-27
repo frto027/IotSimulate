@@ -10,7 +10,9 @@ using System.Windows.Media;
 
 namespace SimuWindows
 {
-
+    /// <summary>
+    /// 拖拽组件的根节点，所有能够拖拽的组件继承这个类
+    /// </summary>
     public class DragCanvas:Canvas
     {
         private Canvas parent;
@@ -29,7 +31,7 @@ namespace SimuWindows
              * */
         }
 
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        protected sealed override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
             if (IsMouseDirectlyOver == false)
@@ -48,7 +50,7 @@ namespace SimuWindows
             //注册回掉，当鼠标移出父控件时停止移动
             parent.MouseLeave += StopDrag;
         }
-        protected override void OnMouseMove(MouseEventArgs e)
+        protected sealed override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
             if (onDrag)
@@ -57,7 +59,7 @@ namespace SimuWindows
                 Margin = new Thickness(m_bx + (pos.X - p_bx), m_by + (pos.Y - p_by), 0, 0);
             }
         }
-        protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
+        protected sealed override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonUp(e);
             StopDrag(null,null);
@@ -74,14 +76,16 @@ namespace SimuWindows
             Children.Add(point);
         }
 
-        public void Remove()
+        public virtual void Remove()
         {
             parent.Children.Remove(this);
         }
 
 
     }
-
+    /// <summary>
+    /// 所有按钮的根节点，所有按钮继承这个类并实现OnClick
+    /// </summary>
     public abstract class ClickPoint:Canvas
     {
         public ClickPoint(double x,double y)
@@ -90,19 +94,19 @@ namespace SimuWindows
             Cursor = Cursors.Hand;
         }
         private bool clickReady = false;
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        protected sealed override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
             if (!IsMouseDirectlyOver)
                 return;
             clickReady = true;
         }
-        protected override void OnMouseLeave(MouseEventArgs e)
+        protected sealed override void OnMouseLeave(MouseEventArgs e)
         {
             base.OnMouseLeave(e);
             clickReady = false;
         }
-        protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
+        protected sealed override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonUp(e);
             if (!IsMouseDirectlyOver)
@@ -113,7 +117,58 @@ namespace SimuWindows
         }
         public abstract void OnClick();
     }
+    /// <summary>
+    /// ClickPoint一个实现类，用于连线另一个ConnectClickPoint
+    /// </summary>
+    public abstract class ConnectClickPoint : ClickPoint
+    {
+        protected GlobalGUIManager globalGUIManager;
 
+        public abstract double X();
+        public abstract double Y();//坐标
+
+        public ConnectClickPoint(double x,double y,GlobalGUIManager globalGUIManager) : base(x, y)
+        {
+            this.globalGUIManager = globalGUIManager;
+        }
+
+        public override void OnClick()
+        {
+            if(globalGUIManager.DragOther == null)
+            {
+                if (StartDrag())
+                {
+                    globalGUIManager.DragOther = this;
+                    //开始拖拽
+                    globalGUIManager.BeginDragDraw(X(),Y());
+                }
+            }
+            else
+            {
+                if(globalGUIManager.DragOther != this)
+                    globalGUIManager.DragOther.EndDrag(this);
+
+                globalGUIManager.EndDragDraw();
+                globalGUIManager.DragOther = null;
+            }
+            
+        }
+        /// <summary>
+        /// 返回True开始连线，返回False停止连线，xy是画线起点坐标
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool StartDrag() { return true; }
+        /// <summary>
+        /// 连线触发事件
+        /// </summary>
+        /// <param name="other">对方的连线节点</param>
+        public abstract void EndDrag(ConnectClickPoint other);
+        public abstract void DisConnect();
+    }
+
+    /// <summary>
+    /// ClickPoint的一个实现类，点击后调用aim.Remove
+    /// </summary>
     public class RemoveClickPoint : ClickPoint
     {
         private DragCanvas aim;
@@ -130,4 +185,6 @@ namespace SimuWindows
             aim.Remove();
         }
     }
+
+
 }
