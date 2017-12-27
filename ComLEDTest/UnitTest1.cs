@@ -12,7 +12,7 @@ namespace ComLEDTest
         public void LEDShouldDisplay()
         {
             //准备Com设备和LED数码管
-            ComIO comIO = new MyComDevice();
+            ComBase comIO = new MyComDevice();
             ComLED.ComLED led = new ComLED.ComLED();
             //连线
             ComConnector connector = new ComConnector();
@@ -39,16 +39,16 @@ namespace ComLEDTest
         }
     }
 
-    public class MyComDevice : ComIO
+    public class MyComDevice : ComBase
     {
-        public override void WhenDataSend(byte[] data, int offset, int len)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Display(byte data)
         {
             ToConnector(new byte[] { data }, 0, 1);
+        }
+
+        public override void OnDataReceive(byte[] data, int offset, int len)
+        {
+            throw new NotImplementedException();
         }
     }
 }
