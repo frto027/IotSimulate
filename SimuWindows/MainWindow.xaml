@@ -7,6 +7,19 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="文件">
+                    <MenuItem Header="退出"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="添加">
+                    <MenuItem Header="虚拟串口" ></MenuItem>
+                    <MenuItem Header="虚拟数码管"  Click="MenuItem_Click"></MenuItem>
+                </MenuItem>
+            </Menu>
+            <Canvas Background="#FF1C5DB0" x:Name="cvs" ClipToBounds="True"/>
+        </DockPanel>
+        
+
     </Grid>
 </Window>
