@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using ComLED;
@@ -56,8 +57,13 @@ namespace SimuWindows
             L1.Content = led.A.ToString();
             L2.Content = led.B.ToString();
         }
+        //这里更新一下连线，以提升界面响应速度
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+            comCanvas.Update();
+        }
 
-        
 
         public override void Remove()
         {

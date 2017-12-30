@@ -19,7 +19,7 @@ namespace SimuWindows
         public ConnectClickPoint A, B;
         private Canvas rootcvs;
         private Line line = new Line();
-
+        
         DispatcherTimer timer = new DispatcherTimer();
 
         public ConnectorCanvas(ConnectClickPoint A,ConnectClickPoint B,Canvas rootcvs)
@@ -45,13 +45,12 @@ namespace SimuWindows
             line.Cursor = Cursors.No;
         }
 
-        private void Update(object sender, EventArgs e)
+        public void Update(object sender, EventArgs e)
         {
             line.X1 = A.X();
             line.Y1 = A.Y();
             line.X2 = B.X();
             line.Y2 = B.Y();
-            
         }
 
         public void MouseDown(object sender, MouseButtonEventArgs e)

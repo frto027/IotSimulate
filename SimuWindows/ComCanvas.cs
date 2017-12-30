@@ -31,10 +31,10 @@ namespace SimuWindows
         {
             
             
-                if (other is ComCanvas)
+                if (other is ComCanvas o)
                 {
-                    if (ConnectedConnector == null && ((ComCanvas)other).ConnectedConnector == null)
-                        ConnectedConnector = (other as ComCanvas).ConnectedConnector = new ComConnectorCanvas(this, other as ComCanvas, globalGUIManager.rootcvs);
+                    if (ConnectedConnector == null && o.ConnectedConnector == null)
+                        ConnectedConnector = o.ConnectedConnector = new ComConnectorCanvas(this, o, globalGUIManager.rootcvs);
                 }
                 else
                 {
@@ -66,7 +66,12 @@ namespace SimuWindows
         {
             ConnectedConnector?.Remove();
         }
-          
+
+        //重绘连接线条，建议在OnMouseMove中调用
+        public void Update()
+        {
+            ConnectedConnector?.Update(null,null);
+        }
     }
 
     public class ComConnectorCanvas : ConnectorCanvas

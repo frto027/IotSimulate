@@ -1,25 +1,29 @@
-﻿<Window x:Class="SimuWindows.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SimuWindows"
+        xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="SimuWindows.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
         <DockPanel>
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="文件">
-                    <MenuItem Header="退出"></MenuItem>
+                    <MenuItem Header="退出"/>
                 </MenuItem>
                 <MenuItem Header="添加">
-                    <MenuItem Header="虚拟串口" ></MenuItem>
-                    <MenuItem Header="虚拟数码管"  Click="MenuItem_Click"></MenuItem>
+                    <MenuItem Header="虚拟串口"   Click="MenuItem_Click" Tag="vcom">
+                        
+                    </MenuItem>
+                    <MenuItem Header="虚拟数码管"  Click="MenuItem_Click" Tag="vled"/>
                 </MenuItem>
             </Menu>
+            <Label DockPanel.Dock="Bottom" Content="双击此处可阅读全部内容" x:Name="BaseLabel" MouseDoubleClick="BaseLabel_MouseDoubleClick"/>
             <Canvas Background="#FF1C5DB0" x:Name="cvs" ClipToBounds="True"/>
         </DockPanel>
-        
+
 
     </Grid>
 </Window>

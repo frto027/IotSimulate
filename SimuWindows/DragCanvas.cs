@@ -50,7 +50,7 @@ namespace SimuWindows
             //注册回掉，当鼠标移出父控件时停止移动
             parent.MouseLeave += StopDrag;
         }
-        protected sealed override void OnMouseMove(MouseEventArgs e)
+        protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
             if (onDrag)
@@ -164,6 +164,7 @@ namespace SimuWindows
         /// <param name="other">对方的连线节点</param>
         public abstract void EndDrag(ConnectClickPoint other);
         public abstract void DisConnect();
+
     }
 
     /// <summary>
