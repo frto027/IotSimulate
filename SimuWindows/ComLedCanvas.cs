@@ -48,7 +48,7 @@ namespace SimuWindows
             timer.Start();
 
             //添加一个Com口连接点
-            Children.Add(comCanvas = new ComCanvas(40, 40, manager));
+            Children.Add(comCanvas = new ComCanvas(40, 60, manager));
         }
 
         public void Update(object sender, EventArgs e)

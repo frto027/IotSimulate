@@ -51,7 +51,7 @@ namespace SimuWindows
             SortKeeper.Start();
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void MenuItem_AddDev_Click(object sender, RoutedEventArgs e)
         {
             if(sender is MenuItem m)
             {
@@ -181,6 +181,12 @@ namespace SimuWindows
         private void BaseLabel_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             MessageBox.Show(BaseLabel.Content.ToString() + "\n" + BaseLabel.Tag?.ToString(),"阅读提示");
+        }
+
+        private void MenuItem_File_Quit_Click(object sender, RoutedEventArgs e)
+        {
+            TipInBase("ByeBye~", true);
+            Close();
         }
     }
 
