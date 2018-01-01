@@ -77,6 +77,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ComVirtualIncCanvas.cs" />
     <Compile Include="ConnectorCanvas.cs" />
     <Compile Include="ComLedCanvas.cs" />
     <Compile Include="ComCanvas.cs" />

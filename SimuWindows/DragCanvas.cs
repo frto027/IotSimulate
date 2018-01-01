@@ -20,12 +20,18 @@ namespace SimuWindows
         private bool onDrag = false;
         double m_bx, m_by;//鼠标按下时的margin
         double p_bx, p_by;//鼠标按下时相对parent的位置
-         
+        /// <summary>
+        /// 鼠标按下，当鼠标直接位于列表中元素上时，响应拖拽
+        /// </summary>
+        public readonly List<Canvas> dragList = new List<Canvas>();
         public DragCanvas(Canvas parent)
         {
             this.parent = parent;
             parent.Children.Add(this);
             Cursor = Cursors.ScrollAll;
+
+            dragList.Add(this);
+
             /*
              * 子类重写构造函数，并设置Height，With，Background
              * */
@@ -34,7 +40,8 @@ namespace SimuWindows
         protected sealed override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
-            if (IsMouseDirectlyOver == false)
+           //当鼠标直接位于dragList中元素上时才会响应
+            if (dragList.Find(c => c.IsMouseDirectlyOver) == null)
                 return;
 
             //重置到顶层
@@ -117,6 +124,22 @@ namespace SimuWindows
         }
         public abstract void OnClick();
     }
+    /// <summary>
+    /// 事件驱动的ClickPoint
+    /// </summary>
+    public class ClickEventPoint : ClickPoint
+    {
+        public event Action OnClickEvent;
+        public ClickEventPoint(double x,double y) : base(x, y)
+        {
+
+        }
+        public sealed override void OnClick()
+        {
+            OnClickEvent();
+        }
+    }
+
     /// <summary>
     /// ClickPoint一个实现类，用于连线另一个ConnectClickPoint
     /// </summary>

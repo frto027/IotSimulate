@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
+using IoTSimulate;
+
 namespace SimuWindows
 {
     /// <summary>
@@ -15,13 +17,23 @@ namespace SimuWindows
     /// </summary>
     public class ComCanvas : ConnectClickPoint
     {
-
         public ComConnectorCanvas ConnectedConnector = null;
-        public ComCanvas(double x, double y, GlobalGUIManager globalGUIManager):base(x, y, globalGUIManager)
+
+        public ComBase ComBase { get; }
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="x">x偏移</param>
+        /// <param name="y">y偏移</param>
+        /// <param name="globalGUIManager">全局对象</param>
+        /// <param name="comBase">绑定的串口</param>
+        public ComCanvas(double x, double y, GlobalGUIManager globalGUIManager,ComBase comBase):base(x, y, globalGUIManager)
         {
             Width = 10;
             Height = 10;
             Background = Brushes.DarkGray;
+            this.ComBase = comBase;
         }
         public override bool StartDrag()
         {
@@ -76,9 +88,18 @@ namespace SimuWindows
 
     public class ComConnectorCanvas : ConnectorCanvas
     {
+        ComConnector connector = new ComConnector();
+
         public ComConnectorCanvas(ComCanvas A, ComCanvas B, Canvas rootcvs):base(A, B, rootcvs)
         {
             //调用驱动
+            connector.Bind(A.ComBase, B.ComBase);
+        }
+
+        public override void Remove()
+        {
+            connector.Close();
+            base.Remove();
         }
     }
 }

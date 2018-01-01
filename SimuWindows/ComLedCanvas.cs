@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -23,24 +24,59 @@ namespace SimuWindows
         public ComLedCanvas(GlobalGUIManager manager) : base(manager.rootcvs)
         {
             Width = 100;
-            Height = 100;
-            Background = new SolidColorBrush(Colors.Green);
+            Height = 80;
+            Background = Brushes.Green;
+
+            Canvas titleCvs = new Canvas
+            {
+                Margin = new Thickness(15, 0, 0, 0),
+                Height = 25,
+                Width = 80,
+                Background = new VisualBrush
+                {
+
+                    Stretch = Stretch.Uniform,
+                    Visual = new Label
+                    {
+                        Content = "ComLed",
+                        Foreground = Brushes.LightGreen
+                    }
+                }
+            };
+            Children.Add(titleCvs);
+            dragList.Add(titleCvs);
+
 
             AddClickPoint(new RemoveClickPoint(0, 0, this));
 
-            c1 = new Canvas();
-            c1.Height = 40;
-            c1.Width = 20;
-            c1.Background = new VisualBrush(L1 = new Label());
-            c1.Margin = new System.Windows.Thickness(20, 20, 0, 0);
-            c2 = new Canvas();
-            c2.Height = 40;
-            c2.Width = 20;
-            c2.Background = new VisualBrush(L2 = new Label());
-            c2.Margin = new System.Windows.Thickness(40, 20, 0, 0);
+            c1 = new Canvas
+            {
+                Height = 80,
+                Width = 40,
+                Margin = new System.Windows.Thickness(0, 5, 0, 0),
+                Background = new VisualBrush()
+                {
+                    Visual = L1 = new Label() { Foreground = Brushes.Red },
+                    Stretch = Stretch.Uniform,
+                }
+            };
+
+            c2 = new Canvas
+            {
+                Height = 80,
+                Width = 40,
+                Background = new VisualBrush() {
+                    Visual = L2 = new Label() { Foreground = Brushes.Red },
+                    Stretch = Stretch.Uniform
+                },
+                Margin = new System.Windows.Thickness(20, 5, 0, 0)
+            };
 
             Children.Add(c1);
             Children.Add(c2);
+
+            dragList.Add(c1);//当鼠标在从c1 c2上按下时也要响应拖拽
+            dragList.Add(c2);
 
             timer.Interval = TimeSpan.FromMilliseconds(100);
             timer.Tick += Update;
@@ -48,7 +84,7 @@ namespace SimuWindows
             timer.Start();
 
             //添加一个Com口连接点
-            Children.Add(comCanvas = new ComCanvas(40, 60, manager));
+            AddClickPoint(comCanvas = new ComCanvas(70, 40, manager,led.com));
         }
 
         public void Update(object sender, EventArgs e)

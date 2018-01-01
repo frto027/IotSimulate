@@ -50,20 +50,29 @@ namespace SimuWindows
             SortKeeper.Interval = TimeSpan.FromMilliseconds(100);
             SortKeeper.Start();
         }
-
+        private enum CREATE_STATUS { OK,DEVELOPING,ERROR}
         private void MenuItem_AddDev_Click(object sender, RoutedEventArgs e)
         {
             if(sender is MenuItem m)
             {
+                
                 switch (m.Tag)
                 {
                     case "vcom":
-                        TipInBase("暂未开发，这是提示测试\nzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
-                            ,true);
-                        break;
+                        new ComVirtualIncCanvas(GlobalGUIManager);
+                        goto case CREATE_STATUS.OK;
                     case "vled":
                         new ComLedCanvas(GlobalGUIManager);
+                        goto case CREATE_STATUS.OK;
+
+                    case CREATE_STATUS.OK://已创建
                         TipInBase("已创建 " + m.Header);
+                        break;
+                    case CREATE_STATUS.DEVELOPING://正在开发
+                        TipInBase("该组件正在开发中！");
+                        break;
+                    case CREATE_STATUS.ERROR:
+                        TipInBase("创建错误");
                         break;
                     default:
                         TipInBase("错误的Tag:"+m.Tag);
@@ -94,8 +103,21 @@ namespace SimuWindows
 
         public void DragDrawing(object sender, MouseEventArgs e) {
             var pos = e.GetPosition(cvs);
-            DrawCusorLine.X2 = pos.X;
-            DrawCusorLine.Y2 = pos.Y - 1;
+
+            //pos应该向X1 X2方向移动1个单位
+            Vector p1 = new Vector(DrawCusorLine.X1, DrawCusorLine.Y1);
+            Vector p2 = new Vector(pos.X, pos.Y);
+            Vector dec = p2 - p1;
+            if (dec.Length < 0)
+                p2 = p1;
+            else
+            {
+                dec.Normalize();
+                p2 = p2 - dec;
+            }
+
+            DrawCusorLine.X2 = p2.X;
+            DrawCusorLine.Y2 = p2.Y;
         }
 
 
