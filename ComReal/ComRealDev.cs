@@ -36,7 +36,8 @@ namespace ComReal
 
         public override void OnDataReceive(byte[] data, int offset, int len)
         {
-            port.Write(data, offset, len);
+            if (port.IsOpen)
+                port.Write(data, offset, len);
         }
 
         public void OpenPort()
