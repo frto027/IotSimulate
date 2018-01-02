@@ -51,6 +51,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -69,6 +71,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="ComDevSetthingTipBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -77,6 +83,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ComDevSetthingTipBox.xaml.cs">
+      <DependentUpon>ComDevSetthingTipBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ComRealDevCanvas.cs" />
     <Compile Include="ComVirtualIncCanvas.cs" />
     <Compile Include="ConnectorCanvas.cs" />
     <Compile Include="ComLedCanvas.cs" />
@@ -130,6 +140,10 @@
     <ProjectReference Include="..\ComLED\ComLED.csproj">
       <Project>{82fe42d8-4e3e-4059-b0d7-78bee91ae49d}</Project>
       <Name>ComLED</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ComReal\ComReal.csproj">
+      <Project>{6c65ff78-e3f4-4954-b74c-364b0e7c3ed2}</Project>
+      <Name>ComReal</Name>
     </ProjectReference>
     <ProjectReference Include="..\ComVirtualIncreacement\ComVirtualIncreacement.csproj">
       <Project>{3b6a4f2f-5ae3-4b90-9e7d-f3a77141aa5e}</Project>

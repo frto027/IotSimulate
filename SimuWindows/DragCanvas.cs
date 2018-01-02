@@ -83,6 +83,11 @@ namespace SimuWindows
             Children.Add(point);
         }
 
+        protected void RemoveClickPoint(ClickPoint point)
+        {
+            Children.Remove(point);
+        }
+
         public virtual void Remove()
         {
             parent.Children.Remove(this);

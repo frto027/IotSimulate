@@ -14,10 +14,9 @@
                     <MenuItem Header="退出" Click="MenuItem_File_Quit_Click"/>
                 </MenuItem>
                 <MenuItem Header="添加">
-                    <MenuItem Header="虚拟串口"   Click="MenuItem_AddDev_Click" Tag="vcom">
-                        
-                    </MenuItem>
+                    <MenuItem Header="虚拟串口"   Click="MenuItem_AddDev_Click" Tag="vcom" />
                     <MenuItem Header="虚拟数码管"  Click="MenuItem_AddDev_Click" Tag="vled"/>
+                    <MenuItem Header="真实串口设备" Click="MenuItem_AddDev_Click" Tag="realcom" />
                 </MenuItem>
             </Menu>
             <Label DockPanel.Dock="Bottom" Content="双击此处可阅读全部内容" x:Name="BaseLabel" MouseDoubleClick="BaseLabel_MouseDoubleClick"/>

@@ -33,7 +33,7 @@ namespace SimuWindows
             //默认值
             new Tuple<Type, byte>(typeof(Object),255),
         };
-
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -41,6 +41,7 @@ namespace SimuWindows
 
             GlobalGUIManager.BeginDragDraw += BeginDragDraw;
             GlobalGUIManager.EndDragDraw += EndDragDraw;
+            GlobalGUIManager.TipText += s => TipInBase(s);
 
             DrawCusorLine.Stroke = Brushes.LawnGreen;
             DrawCusorLine.HorizontalAlignment = HorizontalAlignment.Left;
@@ -50,12 +51,11 @@ namespace SimuWindows
             SortKeeper.Interval = TimeSpan.FromMilliseconds(100);
             SortKeeper.Start();
         }
-        private enum CREATE_STATUS { OK,DEVELOPING,ERROR}
+        private enum CREATE_STATUS { OK, DEVELOPING, ERROR, CANCEL }
         private void MenuItem_AddDev_Click(object sender, RoutedEventArgs e)
         {
             if(sender is MenuItem m)
             {
-                
                 switch (m.Tag)
                 {
                     case "vcom":
@@ -64,7 +64,17 @@ namespace SimuWindows
                     case "vled":
                         new ComLedCanvas(GlobalGUIManager);
                         goto case CREATE_STATUS.OK;
-
+                    case "realcom":
+                        ComReal.ComRealDevSetthings comRealSetthing;
+                        if(new ComDevSetthingTipBox().Query(out comRealSetthing))
+                        {
+                            new ComRealDevCanvas(comRealSetthing, GlobalGUIManager);
+                            goto case CREATE_STATUS.OK;
+                        }
+                        else
+                        {
+                            goto case CREATE_STATUS.CANCEL;
+                        }
                     case CREATE_STATUS.OK://已创建
                         TipInBase("已创建 " + m.Header);
                         break;
@@ -73,6 +83,9 @@ namespace SimuWindows
                         break;
                     case CREATE_STATUS.ERROR:
                         TipInBase("创建错误");
+                        break;
+                    case CREATE_STATUS.CANCEL:
+                        TipInBase("创建取消\n创建已被用户取消");
                         break;
                     default:
                         TipInBase("错误的Tag:"+m.Tag);
