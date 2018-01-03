@@ -72,8 +72,16 @@ namespace SimuWindows
                 });
                 dragList.Add(infoCvs);
             }
-
-            com = new ComRealDev(setthings);
+            try
+            {
+                com = new ComRealDev(setthings);
+            }catch(Exception e)
+            {
+                //创建错误，清理退出
+                Remove();
+                throw e;
+            }
+            
 
             AddClickPoint(new RemoveClickPoint(0, 0, this));
 
@@ -144,7 +152,7 @@ namespace SimuWindows
 
         public override void Remove()
         {
-            comCvs.Remove();
+            comCvs?.Remove();
             if (isOpen)
                 ComClose();
             base.Remove();

@@ -68,7 +68,16 @@ namespace SimuWindows
                         ComReal.ComRealDevSetthings comRealSetthing;
                         if(new ComDevSetthingTipBox().Query(out comRealSetthing))
                         {
-                            new ComRealDevCanvas(comRealSetthing, GlobalGUIManager);
+                            try
+                            {
+                                new ComRealDevCanvas(comRealSetthing, GlobalGUIManager);
+                            }
+                            catch (Exception err)
+                            {
+                                TipInBase("创建错误，" + m.Header + "未被创建\n" + err.ToString());
+                                goto case CREATE_STATUS.ERROR;
+                            }
+                            
                             goto case CREATE_STATUS.OK;
                         }
                         else
@@ -82,7 +91,8 @@ namespace SimuWindows
                         TipInBase("该组件正在开发中！");
                         break;
                     case CREATE_STATUS.ERROR:
-                        TipInBase("创建错误");
+                        //这里不覆盖之前输出的错误提示
+                        //TipInBase("创建错误");
                         break;
                     case CREATE_STATUS.CANCEL:
                         TipInBase("创建取消\n创建已被用户取消");

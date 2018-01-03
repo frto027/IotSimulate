@@ -53,8 +53,21 @@ namespace SimuWindows
         public bool Query(out ComReal.ComRealDevSetthings setthings)
         {
             ExitByNormal = false;
-            ShowDialog();
+            ComPortNameList.Items.Clear();
+
             PrivateContext privateContext = globalGrid.DataContext as PrivateContext;
+
+            try
+            {
+                var pns = System.IO.Ports.SerialPort.GetPortNames();
+                foreach (String s in pns)
+                    ComPortNameList.Items.Add(s);
+                if(privateContext != null)
+                    privateContext.PortName = pns.FirstOrDefault() ?? privateContext.PortName;
+            }
+            catch (System.ComponentModel.Win32Exception) { }
+            ShowDialog();
+            
             setthings = new ComReal.ComRealDevSetthings
             {
                 portName = privateContext?.PortName,
@@ -63,6 +76,8 @@ namespace SimuWindows
                 parity = privateContext?.Parity ?? System.IO.Ports.Parity.Even,
                 stopBits = privateContext?.StopBits ?? System.IO.Ports.StopBits.One
             };
+            
+            
             return ExitByNormal;
         }
 
