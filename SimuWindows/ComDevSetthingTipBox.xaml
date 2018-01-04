@@ -40,6 +40,7 @@
 
         <Label Grid.Column="0" Grid.Row="4" Content="校验位" VerticalAlignment="Center" />
         <ComboBox Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" MinWidth="200" Text="{Binding Parity}">
+            <Ports:Parity>None</Ports:Parity>
             <Ports:Parity>Odd</Ports:Parity>
             <Ports:Parity>Even</Ports:Parity>
             <Ports:Parity>Mark</Ports:Parity>

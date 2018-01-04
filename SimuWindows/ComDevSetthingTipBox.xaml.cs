@@ -39,7 +39,7 @@ namespace SimuWindows
             PortName = "COM1",
             Baudrate = 9600,
             Databits = 8,
-            Parity = System.IO.Ports.Parity.Even,
+            Parity = System.IO.Ports.Parity.None,
             StopBits = System.IO.Ports.StopBits.One
         };
 
