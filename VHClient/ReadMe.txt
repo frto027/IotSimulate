@@ -5,5 +5,7 @@
 目前有以下参数
 
 -f <filepath>	指定二进制文件的路径
+
+TODO:
 -usart1I <pipe>
--usart1O <pipe>	指定虚拟串口的IO匿名管道
+-usart1O <pipe>	指定虚拟串口1的IO匿名管道
