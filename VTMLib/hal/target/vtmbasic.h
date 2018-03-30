@@ -1,5 +1,3 @@
-//TODO：这个头文件不应在这里，应该放到HAL层的驱动中，待移植
-
 #ifndef __VTMBASIC_H
 #define __VTMBASIC_H
 

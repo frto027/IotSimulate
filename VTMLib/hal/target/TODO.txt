@@ -1,1 +1,17 @@
 移植，这里存放一些虚拟硬件相关的东西
+未移植：
+hal_led.c
+led正常使用需要OSAL的移植！！
+之后C#程序直接读取DLL的导出变量P0和P1相关位即可确定LED的状态，只是读取的话不用考虑线程安全
+
+需要编写进C#的函数：
+重启系统：
+__declspec(dllimport) void HAL_SYSTEM_RESET(void);
+延迟函数：
+#define HAL_LED_BLINK_DELAY()   st( { volatile uint32 i; for (i=0; i<0x5800; i++) { }; } )
+__declspec(dllimport) void HAL_LED_BLINK_DELAY(void);
+
+几个uart相关的函数：
+PAPI uint16 HalUARTReadDLL(uint8 *buf, uint16 len);
+PAPI uint16 HalUARTWriteDLL(uint8 *buf, uint16 len);
+PAPI uint16 HalUARTRxAvailDLL();
