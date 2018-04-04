@@ -8,8 +8,9 @@ namespace VHClient
     {
         public enum CallBacks
         {
-            CB_USART_READ,
-            CB_USART_WRITE,
+            CB_UART_READ,
+            CB_UART_WRITE,
+            CB_LEDSET,
             CB_COUNT
         };
 
@@ -34,8 +35,6 @@ namespace VHClient
         private delegate void VHPipe_SetupLinks_TYPE(sbyte id, Delegate callback);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         private delegate int Main_Type();
-        //P0口 TODO GetByteValue("P0")
-        public byte P0 { get { return 0; } }
 
 
         public void SetupLinks(CallBacks id, Delegate func)
@@ -46,14 +45,6 @@ namespace VHClient
             if (fptr == IntPtr.Zero)
                 throw new Exception("invalid dll:can not load function VHPipe_SetupLinks");
             Marshal.GetDelegateForFunctionPointer<VHPipe_SetupLinks_TYPE>(fptr)((sbyte)id, func);
-        }
-
-        private byte GetByteValue(string name)
-        {
-            if (DllPtr == IntPtr.Zero)
-                throw new ArgumentException("no dll loaded");
-            /* ToDO 返回导出变量name的值 */
-            return 0;
         }
 
         public int RunMain()

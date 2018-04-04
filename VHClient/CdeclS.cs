@@ -35,8 +35,8 @@ namespace VHClient
     //传入函数指针的时候不能用泛型，所以这样写
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    delegate void CdeclActionInt(int a);
+    delegate void CdeclActionByteByte(byte a,byte b);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    delegate int CdeclFuncInt();
+    delegate byte CdeclFuncByteByte(byte x);
 }

@@ -45,6 +45,7 @@
     <Compile Include="IEnviroment.cs" />
     <Compile Include="IDevices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VtmDev.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -7,5 +7,11 @@
 -f <filepath>	指定二进制文件的路径
 
 TODO:
--usart1I <pipe>
--usart1O <pipe>	指定虚拟串口1的IO匿名管道
+-iuart0 <pipe>
+-ouart0 <pipe>	指定虚拟串口0的IO匿名管道
+-iuart1 <pipe>
+-ouart1 <pipe>	指定虚拟串口1的IO匿名管道
+-iuart2 <pipe>
+-ouart2 <pipe>	指定虚拟串口2的IO匿名管道
+
+-leds <pipe> 指定led匿名输出管道，每次输出2byte代表led数码管编号和值（共阴）

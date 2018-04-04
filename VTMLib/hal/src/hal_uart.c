@@ -1,7 +1,7 @@
 #include "hal_uart.h"
 
-__declspec(dllimport) void writeUART(uint8 ch);
-__declspec(dllimport) uint8 readUART();
+__declspec(dllimport) void writeUART(uint8 which,uint8 ch);
+__declspec(dllimport) uint8 readUART(uint8 which);
 
 int HalUartOpen(uint8 port){
 	
@@ -10,8 +10,10 @@ int HalUartOpen(uint8 port){
 void HalUartRead(uint8 port,uint8 * buff,unsigned int count){
 	switch(port){
 		case UART_0:
+		case UART_1:
+		case UART_2:
 			while(count--)
-				*buff++=readUART();
+				*buff++=readUART(port);
 		break;
 	}
 }
@@ -19,8 +21,10 @@ void HalUartRead(uint8 port,uint8 * buff,unsigned int count){
 void HalUartWrite(uint8 port,uint8 * buff,unsigned int count){
 	switch(port){
 		case UART_0:
+		case UART_1:
+		case UART_2:
 			while(count--)
-				writeUART(*buff++);
+				writeUART(port,*buff++);
 		break;
 	}
 }

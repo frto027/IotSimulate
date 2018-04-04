@@ -5,5 +5,4 @@ asm (".section .drectve\n\t.ascii \" -export:VHPipe_SetupLinks=VHPipe.VHPipe_Set
 
 __declspec(dllexport) int main(void);
 
-
 #endif
