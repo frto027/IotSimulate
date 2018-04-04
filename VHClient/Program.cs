@@ -22,8 +22,7 @@ namespace VHClient
             var argMaps = GetArgsMap(args);
             //载入相关函数
             //Hacked
-            string dllPath = "C:\\Users\\q6027\\Desktop\\testgcc\\a.bin";
-            //string dllPath = argMaps["f"];
+            string dllPath = argMaps["f"];
             try
             {
                 VHDllLoader loader = new VHDllLoader(dllPath);
@@ -39,7 +38,7 @@ namespace VHClient
                 //do clean
                 loader.Close();
                 //output return value(useless)
-                Console.WriteLine("dll " + dllPath + "run end.return value:" + r);
+                Console.WriteLine("dll [" + dllPath + "] run end.return value:" + r);
             }
             catch (Exception e)
             {

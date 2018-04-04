@@ -34,44 +34,29 @@ namespace SimuWindows
             Width = 140;
             Height = 140;
             Background = Brushes.DarkBlue;
+            //title canvas
+            Children.Add(new Label()
             {
-                Canvas titleCvs;
-                Children.Add(titleCvs = new Canvas
-                {
-                    Margin = new Thickness(20, 0, 0, 0),
-                    Width = 100,
-                    Height = 40,
-                    Background = new VisualBrush(new Label
-                    {
-                        Content = "RealCom",
-                        Foreground = Brushes.Black
-                    })
-                    { Stretch = Stretch.Uniform }
-                });
-                dragList.Add(titleCvs);
-            }
-
+                Margin = new Thickness(20, 0, 0, 0),
+                Content = "RealCom",
+                Foreground = Brushes.Black,
+                IsHitTestVisible = false,
+                FontSize = 18
+            });
+            //info canvas
+            Children.Add(new Label()
             {
-                Canvas infoCvs;
-                Children.Add(infoCvs = new Canvas
-                {
-                    Margin = new Thickness(10, 40, 0, 0),
-                    Width = 100,
-                    Height = 100,
-                    Background = new VisualBrush(new Label()
-                    {
-                        Content = String.Format("Com info:\nName:{0}\n" +
+                Margin = new Thickness(10,40,0,0),
+                IsHitTestVisible = false,
+                Content = String.Format("Com info:\nName:{0}\n" +
                    "bundrate:{1}\n" +
                    "databits:{2}\n" +
                    "stopbits:{3}\n" +
                    "parity:{4}", setthings.portName, setthings.baudrate, setthings.databits,
                    setthings.stopBits.ToString(), setthings.parity.ToString()),
-                        Foreground = Brushes.OrangeRed
-                    })
-                    { Stretch = Stretch.Uniform }
-                });
-                dragList.Add(infoCvs);
-            }
+                Foreground = Brushes.OrangeRed
+            });
+
             try
             {
                 com = new ComRealDev(setthings);

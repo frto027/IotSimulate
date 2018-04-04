@@ -34,7 +34,8 @@ namespace SimuWindows
         Label tempLabel = new Label()
         {
             Content = "??",
-            Margin = new Thickness(45, 20, 0, 0)
+            Margin = new Thickness(45, 20, 0, 0),
+            IsHitTestVisible = false
         };
 
         Slider lightSlider = new Slider()
@@ -50,52 +51,71 @@ namespace SimuWindows
         Label lightLabel = new Label()
         {
             Content = "??",
-            Margin = new Thickness(45, 40, 0, 0)
+            Margin = new Thickness(45, 40, 0, 0),
+            IsHitTestVisible = false
         };
 
         public EnviromentCanvas(GlobalGUIManager manager) : base(manager.rootcvs)
         {
             Width = 200;
             Height = 80;
-            Background = Brushes.Yellow;
+            Background = Brushes.Orange;
 
             rootcvs = manager.rootcvs;
 
             AddClickPoint(new RemoveClickPoint(0, 0, this));
 
+            Children.Add(new Label()
+            {
+                Content = "Enviroment",
+                FontSize = 16,
+                Margin = new Thickness(20, 0, 0, 0),
+                Foreground = Brushes.Blue,
+                IsHitTestVisible = false
+            });
+
             Label tempTipLabel = new Label()
             {
                 Content = "Temp:",
-                Margin = new Thickness(0, 20, 0, 0)
+                Margin = new Thickness(0, 20, 0, 0),
+                IsHitTestVisible = false
             };
             Children.Add(tempTipLabel);
             Children.Add(tempSlider);
             Children.Add(tempLabel);
-            dragList.Add(tempTipLabel);
-            dragList.Add(tempLabel);
 
             Label lightTipLabel = new Label()
             {
                 Content = "Light:",
-                Margin = new Thickness(0, 40, 0, 0)
+                Margin = new Thickness(0, 40, 0, 0),
+                IsHitTestVisible = false
             };
             Children.Add(lightTipLabel);
             Children.Add(lightSlider);
             Children.Add(lightLabel);
-            dragList.Add(lightTipLabel);
-            dragList.Add(lightLabel);
 
             updateTimer.Tick += Update;
             updateTimer.Interval = TimeSpan.FromMilliseconds(200);
             updateTimer.Start();
-            /*
+
             Children.Add(new Canvas()
             {
-                Margin = new Thickness(20, 20, 0, 0),
-                Height = 40,Width = 60,
-                Background = new VisualBrush(slider)
+                IsHitTestVisible = false,
+                Margin = new Thickness(-maxDistance, -maxDistance, 0, 0),
+                Width = 2 * maxDistance, Height = 2 * maxDistance,
+                Background = new DrawingBrush()
+                {
+                    Drawing = new GeometryDrawing()
+                    {
+                        Geometry = new EllipseGeometry(new Point(200, 200), 200, 200),
+                        Pen = new Pen(Brushes.Black, 1) {
+                            DashStyle = new DashStyle(new double[] { 8,6,6,6}, 0)
+                        },
+                        Brush = Brushes.Transparent
+                    }
+                }
             });
-            */
+
         }
 
         public override void Remove()

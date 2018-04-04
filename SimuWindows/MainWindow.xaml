@@ -14,10 +14,12 @@
                     <MenuItem Header="退出" Click="MenuItem_File_Quit_Click"/>
                 </MenuItem>
                 <MenuItem Header="添加">
-                    <MenuItem Header="虚拟串口"   Click="MenuItem_AddDev_Click" Tag="vcom" />
-                    <MenuItem Header="虚拟数码管"  Click="MenuItem_AddDev_Click" Tag="vled"/>
-                    <MenuItem Header="真实串口设备" Click="MenuItem_AddDev_Click" Tag="realcom" />
-                    <MenuItem Header="串口温度传感器" Click="MenuItem_AddDev_Click" Tag="tempsensorcom" />
+                    <MenuItem Header="设备">
+                        <MenuItem Header="虚拟串口"   Click="MenuItem_AddDev_Click" Tag="vcom" />
+                        <MenuItem Header="虚拟数码管"  Click="MenuItem_AddDev_Click" Tag="vled"/>
+                        <MenuItem Header="真实串口设备" Click="MenuItem_AddDev_Click" Tag="realcom" />
+                        <MenuItem Header="串口温度传感器" Click="MenuItem_AddDev_Click" Tag="tempsensorcom" />
+                    </MenuItem>
                     <MenuItem Header="用户环境" Click="MenuItem_AddDev_Click" Tag="roomenv" />
                 </MenuItem>
             </Menu>
