@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ComDev.cs" />
+    <Compile Include="ComTempSensor.cs" />
+    <Compile Include="IEnviroment.cs" />
     <Compile Include="IDevices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

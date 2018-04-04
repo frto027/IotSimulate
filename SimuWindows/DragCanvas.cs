@@ -23,7 +23,7 @@ namespace SimuWindows
         /// <summary>
         /// 鼠标按下，当鼠标直接位于列表中元素上时，响应拖拽
         /// </summary>
-        public readonly List<Canvas> dragList = new List<Canvas>();
+        public readonly List<UIElement> dragList = new List<UIElement>();
         public DragCanvas(Canvas parent)
         {
             this.parent = parent;

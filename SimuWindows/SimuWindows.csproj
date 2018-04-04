@@ -87,12 +87,15 @@
       <DependentUpon>ComDevSetthingTipBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="ComRealDevCanvas.cs" />
+    <Compile Include="ComTempSensorCanvas.cs" />
     <Compile Include="ComVirtualIncCanvas.cs" />
     <Compile Include="ConnectorCanvas.cs" />
     <Compile Include="ComLedCanvas.cs" />
     <Compile Include="ComCanvas.cs" />
     <Compile Include="DragCanvas.cs" />
+    <Compile Include="EnviromentCanvas.cs" />
     <Compile Include="GlobalGUIManager.cs" />
+    <Compile Include="IEnviromentSetable.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

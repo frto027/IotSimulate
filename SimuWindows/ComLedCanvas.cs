@@ -51,9 +51,9 @@ namespace SimuWindows
 
             c1 = new Canvas
             {
-                Height = 80,
+                Height = 60,
                 Width = 40,
-                Margin = new System.Windows.Thickness(0, 5, 0, 0),
+                Margin = new System.Windows.Thickness(0, 20, 0, 0),
                 Background = new VisualBrush()
                 {
                     Visual = L1 = new Label() { Foreground = Brushes.Red },
@@ -63,13 +63,13 @@ namespace SimuWindows
 
             c2 = new Canvas
             {
-                Height = 80,
+                Height = 60,
                 Width = 40,
                 Background = new VisualBrush() {
                     Visual = L2 = new Label() { Foreground = Brushes.Red },
                     Stretch = Stretch.Uniform
                 },
-                Margin = new System.Windows.Thickness(20, 5, 0, 0)
+                Margin = new System.Windows.Thickness(20, 20, 0, 0)
             };
 
             Children.Add(c1);

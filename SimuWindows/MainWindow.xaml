@@ -17,6 +17,8 @@
                     <MenuItem Header="虚拟串口"   Click="MenuItem_AddDev_Click" Tag="vcom" />
                     <MenuItem Header="虚拟数码管"  Click="MenuItem_AddDev_Click" Tag="vled"/>
                     <MenuItem Header="真实串口设备" Click="MenuItem_AddDev_Click" Tag="realcom" />
+                    <MenuItem Header="串口温度传感器" Click="MenuItem_AddDev_Click" Tag="tempsensorcom" />
+                    <MenuItem Header="用户环境" Click="MenuItem_AddDev_Click" Tag="roomenv" />
                 </MenuItem>
             </Menu>
             <Label DockPanel.Dock="Bottom" Content="双击此处可阅读全部内容" x:Name="BaseLabel" MouseDoubleClick="BaseLabel_MouseDoubleClick"/>

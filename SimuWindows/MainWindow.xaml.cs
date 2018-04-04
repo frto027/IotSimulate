@@ -84,6 +84,12 @@ namespace SimuWindows
                         {
                             goto case CREATE_STATUS.CANCEL;
                         }
+                    case "roomenv":
+                        new EnviromentCanvas(GlobalGUIManager);
+                        goto case CREATE_STATUS.OK;
+                    case "tempsensorcom":
+                        new ComTempSensorCanvas(GlobalGUIManager);
+                        goto case CREATE_STATUS.OK;
                     case CREATE_STATUS.OK://已创建
                         TipInBase("已创建 " + m.Header);
                         break;
