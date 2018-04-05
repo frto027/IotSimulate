@@ -20,6 +20,18 @@ void runB(){
 		HalDelayMs(1000);
 	}
 }
+void runC(){
+	uint8 buff;
+	for(int i=0;i<0xFF;i++){
+		for(int j=0;j<4;j++){
+			HalLedNum(j*2,i/0x10);
+			HalLedNum(j*2+1,i%0x10);
+			buff=i;
+			HalUartWrite(UART_0,&buff,1);
+		}
+		HalDelayMs(400);
+	}
+}
 int main(){
 	/*
 	for(int i=0;i<0x10;i++){
@@ -28,7 +40,7 @@ int main(){
 	}
 	*/
 	while(1){
-		runB();
+		runC();
 	}
 	return 0;
 }
