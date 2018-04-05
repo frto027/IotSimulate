@@ -90,6 +90,25 @@ namespace SimuWindows
                     case "tempsensorcom":
                         new ComTempSensorCanvas(GlobalGUIManager);
                         goto case CREATE_STATUS.OK;
+                    case "vtm":
+                        try
+                        {
+                            System.Windows.Forms.OpenFileDialog dialog = new System.Windows.Forms.OpenFileDialog
+                            {
+                                Title = "选择需要烧入的二进制文件"
+                            };
+                            dialog.ShowDialog();
+                            if(dialog.FileName =="")
+                            {
+                                goto case CREATE_STATUS.CANCEL;
+                            }
+                            new VtmDevCanvas(GlobalGUIManager, dialog.FileName);
+                        }catch(Exception err)
+                        {
+                            TipInBase(err.ToString());
+                            goto case CREATE_STATUS.ERROR;
+                        }
+                        goto case CREATE_STATUS.OK;
                     case CREATE_STATUS.OK://已创建
                         TipInBase("已创建 " + m.Header);
                         break;

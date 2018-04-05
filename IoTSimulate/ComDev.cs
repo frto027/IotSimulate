@@ -95,7 +95,7 @@ namespace IoTSimulate
         }
         public abstract void OnDataReceive(Byte[] data, int offset, int len);
 
-        public void Close()
+        public virtual void Close()
         {
             Connector?.Close();
         }

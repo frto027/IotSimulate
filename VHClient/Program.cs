@@ -24,7 +24,8 @@ namespace VHClient
 
         private static PipeStream ledStream;
         private static PipeStream[] UartTx, UartRx;
-        
+
+
         private static void Pipe_UartWrite(byte uart,byte value)
         {
             if (uart < UartTx.Length)
@@ -32,8 +33,6 @@ namespace VHClient
                 UartTx[uart]?.WriteByte(value);
                 UartTx[uart]?.Flush();
             }
-
-            //Console.WriteLine("UART " + uart + " value " + value);
         }
         private static byte Pipe_UartRead(byte uart)
         {
@@ -61,7 +60,7 @@ namespace VHClient
 
             if (argMaps.ContainsKey("leds"))
             {
-                ledStream = new AnonymousPipeClientStream(argMaps["leds"]);
+                ledStream = new AnonymousPipeClientStream(PipeDirection.Out,argMaps["leds"]);
             }
 
             UartRx = new PipeStream[UART_COUNT];
@@ -71,11 +70,11 @@ namespace VHClient
                 string rx = "iuart" + i, tx = "ouart" + i;
                 if (argMaps.ContainsKey(rx))
                 {
-                    UartRx[i] = new AnonymousPipeClientStream(argMaps[rx]);
+                    UartRx[i] = new AnonymousPipeClientStream(PipeDirection.In, argMaps[rx]);
                 }
                 if (argMaps.ContainsKey(tx))
                 {
-                    UartTx[i] = new AnonymousPipeClientStream(argMaps[tx]);
+                    UartTx[i] = new AnonymousPipeClientStream(PipeDirection.Out,argMaps[tx]);
                 }
             }
 
@@ -103,7 +102,7 @@ namespace VHClient
                 Console.Error.WriteLine(e.ToString());
             }
             //Debug only
-            Console.ReadKey();
+            //Console.ReadKey();
         }
 
         //IO参数处理

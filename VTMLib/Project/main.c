@@ -10,7 +10,7 @@ int main(){
 	HalUartWrite(UART_0,buff,1);
 	HalDelayMs(1000);
 	HalUartWrite(UART_0,buff,1);
-	
 	HalLedSet(1,0xFC);
+	HalDelayMs(1000);
 	return 0;
 }

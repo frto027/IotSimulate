@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoTSimulate", "IoTSimulate\IoTSimulate.csproj", "{6B225DC0-7F9F-4741-9F44-F7B7F7BDDE53}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1AABB0F1-4AC8-4BE9-80A3-82EA6A5289EB} = {1AABB0F1-4AC8-4BE9-80A3-82EA6A5289EB}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComBindReflectionTest", "ComBindReflectionTest\ComBindReflectionTest.csproj", "{AE36B077-F66A-4F93-8895-488AA9158906}"
 	ProjectSection(ProjectDependencies) = postProject

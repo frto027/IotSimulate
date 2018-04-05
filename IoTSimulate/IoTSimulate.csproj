@@ -44,7 +44,9 @@
     <Compile Include="ComTempSensor.cs" />
     <Compile Include="IEnviroment.cs" />
     <Compile Include="IDevices.cs" />
+    <Compile Include="JobControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StreamFowardThread.cs" />
     <Compile Include="VtmDev.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

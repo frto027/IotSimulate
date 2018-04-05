@@ -19,6 +19,8 @@
                         <MenuItem Header="虚拟数码管"  Click="MenuItem_AddDev_Click" Tag="vled"/>
                         <MenuItem Header="真实串口设备" Click="MenuItem_AddDev_Click" Tag="realcom" />
                         <MenuItem Header="串口温度传感器" Click="MenuItem_AddDev_Click" Tag="tempsensorcom" />
+                        <MenuItem Header="VTM开发板" Click="MenuItem_AddDev_Click" Tag="vtm" />
+                        
                     </MenuItem>
                     <MenuItem Header="用户环境" Click="MenuItem_AddDev_Click" Tag="roomenv" />
                 </MenuItem>
