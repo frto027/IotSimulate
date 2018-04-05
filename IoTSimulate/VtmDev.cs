@@ -181,7 +181,7 @@ namespace IoTSimulate
             VtmDev dev;
             PipeStream stream;
 
-            byte[] buffer = new byte[2];
+            byte[] buffer = new byte[1024];
 
             Task<int> task;
             int already;
@@ -189,40 +189,33 @@ namespace IoTSimulate
             {
                 this.dev = dev;
                 this.stream = stream;
-
+                already = 0;
                 GetBegin();
             }
             void GetBegin()
             {
-                already = 0;
                 task?.Dispose();
-                task = stream.ReadAsync(buffer, already, 2 - already);
-            }
-            bool GetOK()
-            {
-                if (task.IsCompleted)
-                {
-                    already += task.Result;
-                    if(already == 2)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        task.Dispose();
-                        task = stream.ReadAsync(buffer, already, 2 - already);
-                        return false;
-                    }
-                }
-                return false;
+                task = stream.ReadAsync(buffer, already, buffer.Length - already);
             }
             public void Update()
             {
-                if (GetOK())
+                if (task.IsCompleted)
                 {
-                    if (buffer[0] < VtmDev.LED_COUNT)
+                    already +=task.Result;
+                    int i = 0;
+                    while(already > 1)
                     {
-                        dev.LedValue[buffer[0]] = buffer[1];
+                        byte id = buffer[i++];
+                        byte value = buffer[i++];
+                        already -= 2;
+                        if(id < VtmDev.LED_COUNT)
+                        {
+                            dev.LedValue[id] = value;
+                        }
+                    }
+                    if(already == 1)
+                    {
+                        buffer[0] = buffer[i];//Move last to first
                     }
                     GetBegin();
                 }

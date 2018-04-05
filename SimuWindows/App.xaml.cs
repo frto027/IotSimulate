@@ -13,5 +13,11 @@ namespace SimuWindows
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnExit(ExitEventArgs e)
+        {
+            //停止数码管的图像清晰度提升
+            LedCanvasControl.AbortInitAsync();
+            base.OnExit(e);
+        }
     }
 }

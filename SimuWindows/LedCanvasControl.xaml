@@ -7,14 +7,16 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="201.493">
     <Grid Name="imgcontainers">
-        <Image Source="LEDImg/LED_Dark.png" />
-        <Image Source="LEDImg/LED_Light_A.png" Name="imga"/>
-        <Image Source="LEDImg/LED_Light_B.png" Name="imgb"/>
-        <Image Source="LEDImg/LED_Light_C.png" Name="imgc"/>
-        <Image Source="LEDImg/LED_Light_D.png" Name="imgd"/>
-        <Image Source="LEDImg/LED_Light_E.png" Name="imge"/>
-        <Image Source="LEDImg/LED_Light_F.png" Name="imgf"/>
-        <Image Source="LEDImg/LED_Light_G.png" Name="imgg"/>
+        <Image Name="img"></Image>
+        <!--
+        <Image Source="LEDImg/LED_Light_A.png" />
+        <Image Source="LEDImg/LED_Light_B.png" />
+        <Image Source="LEDImg/LED_Light_C.png" />
+        <Image Source="LEDImg/LED_Light_D.png" />
+        <Image Source="LEDImg/LED_Light_E.png"/>
+        <Image Source="LEDImg/LED_Light_F.png" />
+        <Image Source="LEDImg/LED_Light_G.png"/>
         <Image Source="LEDImg/LED_Light_H.png" />
+       -->
     </Grid>
 </UserControl>
