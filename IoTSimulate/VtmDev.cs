@@ -139,7 +139,7 @@ namespace IoTSimulate
         {
             PipeStream iStream,oStream;
 
-            byte[] buffer = new byte[1];
+            byte[] buffer = new byte[1024];
             Task<int> task;
 
             public PipeCom(PipeStream iStream, PipeStream oStream)

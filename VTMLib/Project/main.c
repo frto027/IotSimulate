@@ -5,12 +5,9 @@
 #include "hal_led.h"
 
 int main(){
-	uint8 buff[10];
-	buff[0]=2;
-	HalUartWrite(UART_0,buff,1);
-	HalDelayMs(1000);
-	HalUartWrite(UART_0,buff,1);
-	HalLedSet(1,0xFC);
-	HalDelayMs(1000);
+	for(int i=0;i<0x10;i++){
+		HalLedNum(i%8,i);
+		HalDelayMs(1000);
+	}
 	return 0;
 }

@@ -71,8 +71,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="LedCanvasControl.xaml.cs">
+      <DependentUpon>LedCanvasControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VtmDevCanvas.cs" />
     <Page Include="ComDevSetthingTipBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LedCanvasControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -157,6 +164,17 @@
       <Project>{6b225dc0-7f9f-4741-9f44-f7b7f7bdde53}</Project>
       <Name>IoTSimulate</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="LEDImg\LED_Dark.png" />
+    <Resource Include="LEDImg\LED_Light_A.png" />
+    <Resource Include="LEDImg\LED_Light_B.png" />
+    <Resource Include="LEDImg\LED_Light_C.png" />
+    <Resource Include="LEDImg\LED_Light_D.png" />
+    <Resource Include="LEDImg\LED_Light_E.png" />
+    <Resource Include="LEDImg\LED_Light_F.png" />
+    <Resource Include="LEDImg\LED_Light_G.png" />
+    <Resource Include="LEDImg\LED_Light_H.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

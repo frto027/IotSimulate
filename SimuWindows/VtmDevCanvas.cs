@@ -28,11 +28,7 @@ namespace SimuWindows
             Background = Brushes.YellowGreen
         };
 
-        Label LEDLabel = new Label()
-        {
-            Margin = new Thickness(40, 40, 0, 0),
-            IsHitTestVisible = false
-        };
+        LedCanvasControl[] LedCanvasControls = new LedCanvasControl[VtmDev.LED_COUNT];
 
         DispatcherTimer timer = new DispatcherTimer();
 
@@ -46,26 +42,50 @@ namespace SimuWindows
         {
             this.global = global;
 
-            Width = 200;
+            Width = 350;
             Height = 200;
             Background = Brushes.WhiteSmoke;
 
             AddClickPoint(new RemoveClickPoint(0, 0, this));
             AddClickPoint(RunButton);
 
-            Children.Add(LEDLabel);
+            
+            //LED CANVAS
+            for(int i = 0; i < leds.Length; i++)
+            {
+                LedCanvasControls[i] = new LedCanvasControl()
+                {
+                    Width = 40,
+                    Height = 80,
+                    Margin = new Thickness(20 + 40 * i, 20, 0, 0),
+                    IsHitTestVisible = false
+                };
+                Children.Add(LedCanvasControls[i]);
+            }
+
+
             Children.Add(StatusLabel);
-
+            //Dev
             dev = new VtmDev(binpath);
-
+            //ComCanvas
             for(int i = 0; i < coms.Length; i++)
             {
-                coms[i] = new ComCanvas(60 + 40 * i, 80, global, dev.GetComPortBase(i));
+                coms[i] = new ComCanvas(60 + 20 * i, 100, global, dev.GetComPortBase(i));
                 AddClickPoint(coms[i]);
             }
 
+            //title
+            Children.Add(new Label()
+            {
+                Content = "VTM-C",
+                FontSize = 30,
+                Foreground = Brushes.SlateBlue,
+                Margin = new Thickness(150, 100, 0, 0),
+                IsHitTestVisible = false
+            });
+
             timer.Tick += Update;
-            timer.Interval = TimeSpan.FromMilliseconds(100);
+            timer.Interval = TimeSpan.FromMilliseconds(50);
 
             RunButton.OnClickEvent += Run;
         }
@@ -109,10 +129,12 @@ namespace SimuWindows
         void DrawLed()
         {
             //根据Leds[i]绘制Led
-            string str = "";
-            foreach (var b in leds)
-                str += b.ToString("X2")+" ";
-            LEDLabel.Content = str;
+            for(int i = 0; i < leds.Length; i++)
+            {
+                LedCanvasControls[i].Value = leds[i];
+                LedCanvasControls[i].Update();
+            }
+            
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
