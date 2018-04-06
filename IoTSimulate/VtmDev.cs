@@ -18,7 +18,8 @@ namespace IoTSimulate
     {
         private static JobControl.Job jobObj = new JobControl.Job();
 
-        private const string VHClientPath = "F:\\project\\VSNet\\IoTSimulate\\VHClient\\bin\\Debug\\VHClient.exe";
+        private const string VHClientPath = "VHClient.exe";
+        //private const string VHClientPath = "F:\\project\\VSNet\\IoTSimulate\\VHClient\\bin\\Debug\\VHClient.exe";
 
         public const int
             UART_COUNT = 3,
@@ -39,9 +40,9 @@ namespace IoTSimulate
 
         public VtmDev(String binPath)
         {
-            
+
             //Configure params
-            args = "-f " + binPath;//bin path
+            args = "-f " + "\"" + binPath + "\"";//bin path
             for(int i = 0; i < ComPort.Length; i++)//uart IO pipe
             {
                 AnonymousPipeServerStream
@@ -55,7 +56,6 @@ namespace IoTSimulate
             AnonymousPipeServerStream ledRx = new AnonymousPipeServerStream(PipeDirection.In, HandleInheritability.Inheritable);
             ledPipe = new LedPipe(this, ledRx);
             args += " -leds " + ledRx.GetClientHandleAsString();
-            
         }
         /// <summary>
         /// 启动新进程，（如果有）终止旧进程

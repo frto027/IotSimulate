@@ -1,0 +1,3 @@
+Sample VTM-C bin generate project
+执行Compile.bat即可编译生成a.bin
+CompileDebug.bat是用来调试用的，在VS工程里面的话可以直接链接到生成的VHPipe.dll，具体在Makefile里面指定的

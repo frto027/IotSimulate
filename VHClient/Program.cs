@@ -55,9 +55,15 @@ namespace VHClient
         static void Main(string[] args)
         {
             var argMaps = GetArgsMap(args);
+
+            if (argMaps.ContainsKey("f") == false)
+            {
+                Console.WriteLine("ERROR:no file used");
+                return;
+            }
             //载入相关函数
             string dllPath = argMaps["f"];
-
+            
             if (argMaps.ContainsKey("leds"))
             {
                 ledStream = new AnonymousPipeClientStream(PipeDirection.Out,argMaps["leds"]);
@@ -100,6 +106,10 @@ namespace VHClient
             catch (Exception e)
             {
                 Console.Error.WriteLine(e.ToString());
+                using(var writer = File.AppendText("VHClientError.log"))
+                {
+                    writer.WriteLine(e.ToString());
+                }
             }
             //Debug only
             //Console.ReadKey();
