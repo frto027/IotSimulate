@@ -1,0 +1,6 @@
+nocopy.txt
+VTMLib.vcxproj
+VTMLib.vcxproj.filters
+VTMLib.vcxproj.user
+Release
+Debug

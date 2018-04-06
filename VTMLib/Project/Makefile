@@ -1,6 +1,8 @@
 SRC+=main.c
-
+#这个指向hal目录所在文件夹
 LIB_ROOT=./..
+#这个是直接指向VHPipe.dll所在文件夹
+VHPipe_LIB=./../..
 
 CC=gcc
 
@@ -13,10 +15,11 @@ SRC+= $(wildcard $(HAL_ROOT)/src/*.c)
 INCLUDE+= -I $(HAL_INCLUDE)
 INCLUDE+= -I .
 
-LIB_DIR+= -L $(LIB_ROOT)/lib
+
+LIB_DIR+= -L $(VHPipe_LIB)
 
 #下面这个是VHPipe.dll编译生成的目录，如果没办法编译的话改一下这个
-VHPipeBuildDir=$(LIB_ROOT)/../Debug
+#VHPipeBuildDir=$(LIB_ROOT)/../Debug
 
 LIB += -lVHPipe
 
