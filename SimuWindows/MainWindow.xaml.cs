@@ -109,6 +109,9 @@ namespace SimuWindows
                             goto case CREATE_STATUS.ERROR;
                         }
                         goto case CREATE_STATUS.OK;
+                    case "wlcom":
+                        new WirelessComDevCanvas(GlobalGUIManager);
+                        goto case CREATE_STATUS.OK;
                     case "wlhostcom":
                         new WirelessComHostCanvas(GlobalGUIManager);
                         goto case CREATE_STATUS.OK;

@@ -102,7 +102,8 @@ namespace IoTSimulate
         public override void Close()
         {
             base.Close();
-            foreach (var d in devs)
+            LinkedList<WLDev> dev = new LinkedList<WLDev>(devs);
+            foreach (var d in dev)
                 d.SetHost(null);
         }
     }

@@ -13,27 +13,57 @@ namespace SimuWindows
 {
     class WirelessComHostCanvas:DragCanvas
     {
+        public double SignalDistance = 200;
+
         public WLComHost WLComHost = new WLComHost();
 
         private ComCanvas ComCanvas;
 
+        Canvas RangeCanvas;
+        EllipseGeometry RangeGeometry;
+
         DispatcherTimer timer = new DispatcherTimer();
+
+        Point CenterPoint = new Point(60, 30);
+
+        Canvas rootcvs;
         public WirelessComHostCanvas(GlobalGUIManager global) : base(global.rootcvs)
         {
             Width = 250;
             Height = 60;
 
             Background = Brushes.OrangeRed;
+
+            rootcvs = global.rootcvs;
+            //Title
             Children.Add(new Label()
             {
                 IsHitTestVisible = false,
                 Margin = new Thickness(30, 5, 0, 0),
                 Content = "wireless(host) <-> com"
             });
+            //Remove
             AddClickPoint(new RemoveClickPoint(0, 0, this));
-
+            //Combase
             ComCanvas = new ComCanvas(30, 30, global, WLComHost.comBase);
             AddClickPoint(ComCanvas);
+
+            //Range
+            Children.Add(RangeCanvas = new Canvas()
+            {
+                Margin = new Thickness(0,0,0,0),
+                Background = new DrawingBrush()
+                {
+                    Drawing = new GeometryDrawing()
+                    {
+                        Pen = new Pen(Brushes.Red,0.2),
+                        Geometry = RangeGeometry = new EllipseGeometry(),
+                        Brush = new SolidColorBrush(Color.FromArgb(60, 100, 100, 10))
+                    },
+                },
+                IsHitTestVisible = false
+            });
+            UpdateRange();
 
             timer.Tick += Update;
             timer.Interval = TimeSpan.FromMilliseconds(100);
@@ -44,7 +74,13 @@ namespace SimuWindows
         {
             WLComHost.Update();
         }
-
+        private void UpdateRange()
+        {
+            RangeCanvas.Margin = new Thickness(-SignalDistance + CenterPoint.X, -SignalDistance + CenterPoint.Y, 0, 0);
+            RangeCanvas.Width = RangeCanvas.Height = 2 * SignalDistance;
+            RangeGeometry.Center = new Point(SignalDistance, SignalDistance);
+            RangeGeometry.RadiusX = RangeGeometry.RadiusY = SignalDistance;
+        }
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
@@ -53,10 +89,20 @@ namespace SimuWindows
 
         public override void Remove()
         {
+            timer.Stop();
             ComCanvas.Remove();
             WLComHost.Close();
             base.Remove();
 
+        }
+
+        public double DistanceSquareOf(double x,double y)
+        {
+            Point p = TranslatePoint(CenterPoint, rootcvs);
+            double L = p.X, T = p.Y;
+            L -= x;
+            T -= y;
+            return L * L + T * T;
         }
     }
 }
