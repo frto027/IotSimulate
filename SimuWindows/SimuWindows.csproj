@@ -83,6 +83,7 @@
       <DependentUpon>LoadingForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="VtmDevCanvas.cs" />
+    <Compile Include="WirelessComHostCanvas.cs" />
     <Page Include="ComDevSetthingTipBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

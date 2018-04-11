@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO.Pipes;
 using System.IO;
+using System.Threading;
+using System.Diagnostics;
+
 namespace VHClient
 {
     class Program
@@ -113,6 +116,7 @@ namespace VHClient
             }
             //Debug only
             //Console.ReadKey();
+            
         }
 
         //IO参数处理
