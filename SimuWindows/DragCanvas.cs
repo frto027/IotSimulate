@@ -15,6 +15,8 @@ namespace SimuWindows
     /// </summary>
     public class DragCanvas:Canvas
     {
+        public static event Action MouseMoveAction;//千万记得Remove的时候这里要移除事件，否则会内存泄漏
+
         private Canvas parent;
 
         private bool onDrag = false;
@@ -25,6 +27,9 @@ namespace SimuWindows
         /// 当鼠标位于dragHardList中元素上时，无论如何响应拖拽
         /// </summary>
         public readonly List<UIElement> dragList = new List<UIElement>(),dragHardList = new List<UIElement>();
+
+        MainWindow mainWindow = null;
+
         public DragCanvas(Canvas parent)
         {
             this.parent = parent;
@@ -33,6 +38,14 @@ namespace SimuWindows
 
             dragList.Add(this);
 
+            {//从parent向上爬到MainWindow
+                DependencyObject elem = parent;
+                while(elem != null && elem is MainWindow == false)
+                {
+                    elem = VisualTreeHelper.GetParent(elem);
+                }
+                mainWindow = elem as MainWindow;
+            }
             /*
              * 子类重写构造函数，并设置Height，With，Background
              * */
@@ -48,6 +61,10 @@ namespace SimuWindows
             //重置到顶层
             parent.Children.Remove(this);
             parent.Children.Add(this);
+            //分类
+            //这里希望能够调用MainWindow.KeepSort()
+            mainWindow?.KeepSort(null,null);
+
             //记录坐标开始拖动
             Point pos = e.GetPosition(parent);
             m_bx = Margin.Left;
@@ -66,6 +83,9 @@ namespace SimuWindows
                 Point pos = e.GetPosition(parent);
                 Margin = new Thickness(m_bx + (pos.X - p_bx), m_by + (pos.Y - p_by), 0, 0);
             }
+            //鼠标移动时触发全局事件更新画布
+            MouseMoveAction?.Invoke();
+
         }
         protected sealed override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {

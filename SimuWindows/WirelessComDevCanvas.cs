@@ -54,13 +54,11 @@ namespace SimuWindows
         {
             signal.Update();
             WLCom.Update();
-            signal.UpdateMove();
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
-            signal.UpdateMove();
         }
 
         public override void Remove()

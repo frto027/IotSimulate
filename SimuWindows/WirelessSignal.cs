@@ -32,6 +32,7 @@ namespace SimuWindows
             this.dev = dev;
             Margin = new Thickness(x, y, 0, 0);
             rootcvs.Children.Add(line);
+            DragCanvas.MouseMoveAction += UpdateMove;
         }
 
         public void Update()
@@ -60,7 +61,7 @@ namespace SimuWindows
            
         }
 
-        public void UpdateMove()
+        private void UpdateMove()
         {
             if (aimHost == null)
             {
@@ -80,6 +81,7 @@ namespace SimuWindows
 
         public void Remove()
         {
+            DragCanvas.MouseMoveAction -= UpdateMove;
             rootcvs.Children.Remove(line);
         }
     }

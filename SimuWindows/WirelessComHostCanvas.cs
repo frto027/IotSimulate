@@ -26,7 +26,7 @@ namespace SimuWindows
 
         Point CenterPoint = new Point(60, 30);
 
-        Canvas rootcvs;
+        Canvas rootcvs,maskcvs;
         public WirelessComHostCanvas(GlobalGUIManager global) : base(global.rootcvs)
         {
             Width = 250;
@@ -35,6 +35,7 @@ namespace SimuWindows
             Background = Brushes.OrangeRed;
 
             rootcvs = global.rootcvs;
+            maskcvs = global.maskcvs;
             //Title
             Children.Add(new Label()
             {
@@ -49,7 +50,7 @@ namespace SimuWindows
             AddClickPoint(ComCanvas);
 
             //Range
-            Children.Add(RangeCanvas = new Canvas()
+            maskcvs.Children.Add(RangeCanvas = new Canvas()
             {
                 Margin = new Thickness(0,0,0,0),
                 Background = new DrawingBrush()
@@ -76,7 +77,8 @@ namespace SimuWindows
         }
         private void UpdateRange()
         {
-            RangeCanvas.Margin = new Thickness(-SignalDistance + CenterPoint.X, -SignalDistance + CenterPoint.Y, 0, 0);
+            Point p = TranslatePoint(CenterPoint, maskcvs);
+            RangeCanvas.Margin = new Thickness(-SignalDistance + p.X, -SignalDistance + p.Y, 0, 0);
             RangeCanvas.Width = RangeCanvas.Height = 2 * SignalDistance;
             RangeGeometry.Center = new Point(SignalDistance, SignalDistance);
             RangeGeometry.RadiusX = RangeGeometry.RadiusY = SignalDistance;
@@ -85,10 +87,12 @@ namespace SimuWindows
         {
             base.OnMouseMove(e);
             ComCanvas.Update();
+            UpdateRange();
         }
 
         public override void Remove()
         {
+            maskcvs.Children.Remove(RangeCanvas);
             timer.Stop();
             ComCanvas.Remove();
             WLComHost.Close();

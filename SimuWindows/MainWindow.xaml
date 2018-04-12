@@ -29,7 +29,9 @@
                 </MenuItem>
             </Menu>
             <Label DockPanel.Dock="Bottom" Content="双击此处可阅读全部内容" x:Name="BaseLabel" MouseDoubleClick="BaseLabel_MouseDoubleClick"/>
-            <Canvas Background="#FF1C5DB0" x:Name="cvs" ClipToBounds="True"/>
+            <Canvas Background="#FF1C5DB0" x:Name="cvs" ClipToBounds="True">
+                
+            </Canvas>
         </DockPanel>
 
 

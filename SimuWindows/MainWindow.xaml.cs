@@ -28,8 +28,9 @@ namespace SimuWindows
         //排列顺序，越小越靠上
         Tuple<Type, byte>[] SortOrder = new Tuple<Type, byte>[]
         {
-            new Tuple<Type, byte>(typeof(Line),1),
-            new Tuple<Type, byte>(typeof(DragCanvas),2),
+            new Tuple<Type, byte>(typeof(MaskCanvas),1),
+            new Tuple<Type, byte>(typeof(Line),3),
+            new Tuple<Type, byte>(typeof(DragCanvas),5),
             //默认值
             new Tuple<Type, byte>(typeof(Object),255),
         };
@@ -38,6 +39,9 @@ namespace SimuWindows
         {
             InitializeComponent();
             GlobalGUIManager.rootcvs = cvs;
+
+            GlobalGUIManager.maskcvs = new MaskCanvas() { Margin = new Thickness(0, 0, 0, 0), IsHitTestVisible = false };
+            cvs.Children.Add(GlobalGUIManager.maskcvs);
 
             GlobalGUIManager.BeginDragDraw += BeginDragDraw;
             GlobalGUIManager.EndDragDraw += EndDragDraw;
@@ -48,7 +52,7 @@ namespace SimuWindows
             DrawCusorLine.VerticalAlignment = VerticalAlignment.Top;
 
             SortKeeper.Tick += KeepSort;
-            SortKeeper.Interval = TimeSpan.FromMilliseconds(100);
+            SortKeeper.Interval = TimeSpan.FromMilliseconds(2000);
             SortKeeper.Start();
         }
         private enum CREATE_STATUS { OK, DEVELOPING, ERROR, CANCEL }
@@ -185,7 +189,7 @@ namespace SimuWindows
         /// 对cvs中的Children进行排序，要求优先级相同保持顺序
         /// </summary>
         private Dictionary<Type, int> SortOrderBuff = new Dictionary<Type, int>();
-        private void KeepSort(object o, EventArgs e)
+        public void KeepSort(object o, EventArgs e)
         {
             int GetByType(Type t)
             {
@@ -265,5 +269,8 @@ namespace SimuWindows
             Close();
         }
     }
+    public class MaskCanvas : Canvas
+    {
 
+    }
 }

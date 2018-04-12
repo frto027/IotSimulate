@@ -15,5 +15,7 @@ namespace SimuWindows
         public Action EndDragDraw;//终止画线
 
         public Action<String> TipText;
+
+        public Canvas maskcvs;//浮动在最顶层的Canvas，一般用来显示范围什么的
     }
 }
