@@ -12,6 +12,9 @@ using System.Windows.Input;
 
 namespace SimuWindows
 {
+    /// <summary>
+    /// VTM-C开发板
+    /// </summary>
     class VtmDevCanvas:DragCanvas
     {
         VtmDev dev;
@@ -62,7 +65,6 @@ namespace SimuWindows
                 };
                 Children.Add(LedCanvasControls[i]);
             }
-
 
             Children.Add(StatusLabel);
             //Dev

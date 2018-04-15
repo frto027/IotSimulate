@@ -18,4 +18,8 @@ extern void HalLedInit();
 
 extern void HalLedNum(uint8 led,uint8 value);
 extern void HalLedSet(uint8 led,uint8 value);
+
+extern void HalLedLock(uint8 lock);
+extern uint8 HalLedIsLock();
+
 #endif

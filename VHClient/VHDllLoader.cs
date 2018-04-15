@@ -11,6 +11,8 @@ namespace VHClient
             CB_UART_READ,
             CB_UART_WRITE,
             CB_LEDSET,
+            CB_DO_HAL_EVENT,
+            CB_GET_HAL_EVENT,
             CB_COUNT
         };
 

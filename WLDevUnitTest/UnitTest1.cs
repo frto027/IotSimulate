@@ -29,5 +29,13 @@ namespace WLDevUnitTest
             Assert.AreEqual(1024, host.RemainData);
             
         }
+
+        [TestMethod]
+        public void TestChar()
+        {
+            string s = "222";
+            char[] arr = { (char)50, (char)50, (char)50, (char)0, (char)50 };
+            Console.WriteLine(new String(arr));
+        }
     }
 }

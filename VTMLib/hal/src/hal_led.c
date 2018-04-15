@@ -3,6 +3,8 @@
 
 __declspec(dllimport) void LedSet(uint8 which, uint8 value);
 
+__declspec(dllimport) void HalLedLock(uint8 lock);
+__declspec(dllimport) uint8 HalLedIsLock();
 
 
 void HalLedInit(){
