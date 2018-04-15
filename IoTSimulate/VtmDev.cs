@@ -19,20 +19,6 @@ namespace IoTSimulate
         private static JobControl.Job jobObj = new JobControl.Job();
 
         private const string VHClientPath = "VHClient.exe";
-        //private const string VHClientPath = "F:\\project\\VSNet\\IoTSimulate\\VHClient\\bin\\Debug\\VHClient.exe";
-
-        public const int
-            UART_COUNT = 3,
-            LED_COUNT = 8;
-
-
-        private ComBase[] ComPort = new PipeCom[UART_COUNT];//不可以修改ComPort
-
-        private byte[] LedValue = new byte[LED_COUNT];
-
-        private bool LedLock = false;//是否关闭Led显示
-
-        private LedPipe ledPipe;//处理LED管道
 
         private HalEventPipe halEventPipe;//处理HalEvelt管道
 
@@ -50,25 +36,14 @@ namespace IoTSimulate
         /// </summary>
         public List<Func<string,string>> GetHalEventList = new List<Func<string,string>>();//捕获列表
 
+        private event Action UpdateList;
+        private event Action CloseList;
 
         public VtmDev(String binPath)
         {
 
             //Configure params
             args = "-f " + "\"" + binPath + "\"";//bin path
-            for(int i = 0; i < ComPort.Length; i++)//uart IO pipe
-            {
-                AnonymousPipeServerStream
-                    Tx = new AnonymousPipeServerStream(PipeDirection.Out, HandleInheritability.Inheritable),
-                    Rx = new AnonymousPipeServerStream(PipeDirection.In, HandleInheritability.Inheritable);
-                args += " -iuart" + i.ToString() + " " + Tx.GetClientHandleAsString();
-                args += " -ouart" + i.ToString() + " " + Rx.GetClientHandleAsString();
-                ComPort[i] = new PipeCom(Rx, Tx);
-            }
-            //led pipe
-            AnonymousPipeServerStream ledRx = new AnonymousPipeServerStream(PipeDirection.In, HandleInheritability.Inheritable);
-            ledPipe = new LedPipe(this, ledRx);
-            args += " -leds " + ledRx.GetClientHandleAsString();
 
             //HalEventPipe
             AnonymousPipeServerStream HalEventTx = new AnonymousPipeServerStream(PipeDirection.Out, HandleInheritability.Inheritable),
@@ -78,34 +53,40 @@ namespace IoTSimulate
 
             halEventPipe = new HalEventPipe(this, new BinaryWriter(HalEventTx), new BinaryReader(HalEventRx));
 
-            //DEBUG HAL DEVICE:HAL SWITCH
-            DoHalEvent += (string s) =>
-            {
-                //Console.WriteLine(s);
-                if (s.StartsWith("led "))
-                {
-                    if(s == "led on")
-                    {
-                        LedLock = false;
-                    }
-                    if(s == "led off")
-                    {
-                        LedLock = true;
-                    }
-                }
-            };
-            GetHalEventList.Add((string s) =>
-            {
-                if (s.StartsWith("led "))
-                {
-                    if (s == "led getlock")
-                    {
-                        return LedLock ? "T" : "F";//返回string表示处理此结果
-                    }
-                }
-                return null;//返回null表示不处理此结果
-            });
 
+            //反射函数处理
+            foreach (var func in typeof(VtmDev).GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance))
+            {
+                foreach (VtmFunctionAttribute attr in func.GetCustomAttributes(typeof(VtmFunctionAttribute), true))
+                {
+                    switch (attr.AttrType)
+                    {
+                        case VtmFunctionAttribute.FunctionType.Init:
+                            func.Invoke(this, null);
+                            break;
+                        case VtmFunctionAttribute.FunctionType.Update:
+                            var delgt_update = func.CreateDelegate(typeof(Action), this);
+                            UpdateList += () => { delgt_update.DynamicInvoke(null); };
+                            break;
+                        case VtmFunctionAttribute.FunctionType.Close:
+                            var delgt_close = func.CreateDelegate(typeof(Action), this);
+                            CloseList += () => { delgt_close.DynamicInvoke(null); };
+                            break;
+                        case VtmFunctionAttribute.FunctionType.HalDoEvent:
+                            var delgt_doevent = func.CreateDelegate(typeof(Action<string>), this);
+                            DoHalEvent += (s) => { delgt_doevent.DynamicInvoke(s); };
+                            break;
+                        case VtmFunctionAttribute.FunctionType.HalGetEvent:
+                            var delgt_getevent = func.CreateDelegate(typeof(Func<string, string>), this);
+                            GetHalEventList.Add((s) => { return delgt_getevent.DynamicInvoke(s) as string; });
+                            break;
+                    }
+                }
+            }
+            
+
+            
+           
         }
         /// <summary>
         /// 启动新进程，（如果有）终止旧进程
@@ -138,148 +119,34 @@ namespace IoTSimulate
         {
             process?.Kill();
         }
-
-        /// <summary>
-        /// 获取开发板的串口连接
-        /// </summary>
-        /// <param name="num">串口编号</param>
-        /// <returns>串口基类</returns>
-        public ComBase GetComPortBase(int num)
-        {
-            if(num < UART_COUNT)
-            {
-                return ComPort[num];
-            }
-            return null;
-        }
-        /// <summary>
-        /// 获取开发板的共阴LED状态
-        /// </summary>
-        /// <param name="led">LED编号</param>
-        /// <returns>一个字节代表LED状态</returns>
-        public byte GetLedValue(int led)
-        {
-            if (LedLock)
-                return 0x56;
-            if (led < LedValue.Length)
-                return LedValue[led];
-            return 0;
-        }
+       
 
         public void Update()
         {
-            foreach(PipeCom p in ComPort)
-            {
-                p.Update();
-            }
-            ledPipe?.Update();
             halEventPipe?.Update();
+
+            UpdateList();
         }
 
         public void Close()
         {
             //kill program
-            if (process != null && process.HasExited == false)
-                process?.Kill();//小心抛异常！
-            foreach(PipeCom p in ComPort)
+            try
             {
-                p?.Close();
+                if (process != null && process.HasExited == false)
+                    process?.Kill();//小心抛异常！
             }
-            ledPipe?.Close();
+            catch (Exception) { }
+            
+            CloseList();
+
             halEventPipe?.Close();
         }
 
-        private class PipeCom : ComBase
-        {
-            PipeStream iStream,oStream;
-
-            byte[] buffer = new byte[1024];
-            Task<int> task;
-
-            public PipeCom(PipeStream iStream, PipeStream oStream)
-            {
-                this.iStream = iStream;
-                this.oStream = oStream;
-
-                ReadNext();
-            }
-
-            public override void OnDataReceive(byte[] data, int offset, int len)
-            {
-                oStream.Write(data, offset, len);
-                oStream.Flush();
-            }
-
-            private void ReadNext()
-            {
-                task?.Dispose();
-                task = iStream.ReadAsync(buffer, 0, buffer.Length);
-            }
-
-            public void Update()
-            {
-                if (task.IsCompleted)
-                {
-                    ToConnector(buffer, 0, task.Result);
-                    ReadNext();
-                }
-            }
-
-            public override void Close()
-            {
-                base.Close();
-            }
-        }
-        private class LedPipe
-        {
-            VtmDev dev;
-            PipeStream stream;
-
-            byte[] buffer = new byte[1024];
-
-            Task<int> task;
-            int already;
-            public LedPipe(VtmDev dev,PipeStream stream)
-            {
-                this.dev = dev;
-                this.stream = stream;
-                already = 0;
-                GetBegin();
-            }
-            void GetBegin()
-            {
-                task?.Dispose();
-                task = stream.ReadAsync(buffer, already, buffer.Length - already);
-            }
-            public void Update()
-            {
-                if (task.IsCompleted)
-                {
-                    already +=task.Result;
-                    int i = 0;
-                    while(already > 1)
-                    {
-                        byte id = buffer[i++];
-                        byte value = buffer[i++];
-                        already -= 2;
-                        if(id < VtmDev.LED_COUNT)
-                        {
-                            dev.LedValue[id] = value;
-                        }
-                    }
-                    if(already == 1)
-                    {
-                        buffer[0] = buffer[i];//Move last to first
-                    }
-                    GetBegin();
-                }
-            }
-
-            public void Close()
-            {
-
-            }
-        }
+        
+        /// <summary>
+        /// 提供另一种Hal交互方式：字符消息管道，见LedLock.cs，以及VtmPipe.dll中两个函数的实现
+        /// </summary>
         private class HalEventPipe
         {
             BinaryReader input;
@@ -347,6 +214,19 @@ namespace IoTSimulate
             public void Close()
             {
                 
+            }
+        }
+
+        public class VtmFunctionAttribute : Attribute
+        {
+            public enum FunctionType { Init,Update,HalDoEvent,HalGetEvent,Close};
+            private FunctionType type;
+
+            public FunctionType AttrType => type;
+
+            public VtmFunctionAttribute(FunctionType type)
+            {
+                this.type = type;
             }
         }
     }

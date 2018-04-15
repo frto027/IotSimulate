@@ -48,7 +48,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StreamFowardThread.cs" />
     <Compile Include="VtmDev.cs" />
+    <Compile Include="VtmDev_Comport.cs" />
     <Compile Include="VtmDev_Led.cs" />
+    <Compile Include="VtmDev_LedLock.cs" />
     <Compile Include="WLDev.cs" />
     <Compile Include="WLPackageDev.cs" />
     <Compile Include="WLCom.cs" />
