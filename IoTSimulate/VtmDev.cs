@@ -63,19 +63,19 @@ namespace IoTSimulate
                             break;
                         case VtmFunctionAttribute.FunctionType.Update:
                             var delgt_update = func.CreateDelegate(typeof(Action), this);
-                            UpdateList += () => { delgt_update.DynamicInvoke(null); };
+                            UpdateList += () => delgt_update.DynamicInvoke(null);
                             break;
                         case VtmFunctionAttribute.FunctionType.Close:
                             var delgt_close = func.CreateDelegate(typeof(Action), this);
-                            CloseList += () => { delgt_close.DynamicInvoke(null); };
+                            CloseList += () => delgt_close.DynamicInvoke(null);
                             break;
                         case VtmFunctionAttribute.FunctionType.HalDoEvent:
                             var delgt_doevent = func.CreateDelegate(typeof(Action<string>), this);
-                            DoHalEvent += (s) => { delgt_doevent.DynamicInvoke(s); };
+                            DoHalEvent += (s) => delgt_doevent.DynamicInvoke(s);
                             break;
                         case VtmFunctionAttribute.FunctionType.HalGetEvent:
                             var delgt_getevent = func.CreateDelegate(typeof(Func<string, string>), this);
-                            GetHalEventList.Add((s) => { return delgt_getevent.DynamicInvoke(s) as string; });
+                            GetHalEventList.Add((s) => delgt_getevent.DynamicInvoke(s) as string);
                             break;
                     }
                 }
