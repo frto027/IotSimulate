@@ -15,22 +15,22 @@ namespace IoTSimulate
         private byte[] LedValue = new byte[LED_COUNT];
 
         private LedPipe ledPipe;//处理LED管道
-
+        //加入这个注解，可以在初始化的时候被执行
         [VtmFunction(VtmFunctionAttribute.FunctionType.Init)]
         private void Init_Led()
         {
             //led pipe
-            AnonymousPipeServerStream ledRx = new AnonymousPipeServerStream(PipeDirection.In, HandleInheritability.Inheritable);
+            var ledRx = CreatePipeToArgument("leds", true);
             ledPipe = new LedPipe(this, ledRx);
-            args += " -leds " + ledRx.GetClientHandleAsString();
-        }
 
+        }
+        //加入这个注解，可以在Update的时候被周期执行，一秒钟会执行若干次
         [VtmFunction(VtmFunctionAttribute.FunctionType.Update)]
         private void Update_Led()
         {
             ledPipe?.Update();
         }
-
+        //加入这个注解，在VtmDev被Remove的时候执行
         [VtmFunction(VtmFunctionAttribute.FunctionType.Close)]
         private void Close_Led()
         {

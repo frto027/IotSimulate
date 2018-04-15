@@ -46,13 +46,10 @@ namespace IoTSimulate
             args = "-f " + "\"" + binPath + "\"";//bin path
 
             //HalEventPipe
-            AnonymousPipeServerStream HalEventTx = new AnonymousPipeServerStream(PipeDirection.Out, HandleInheritability.Inheritable),
-                HalEventRx = new AnonymousPipeServerStream(PipeDirection.In, HandleInheritability.Inheritable);
-            args += " -haleventi " + HalEventTx.GetClientHandleAsString();
-            args += " -halevento " + HalEventRx.GetClientHandleAsString();
-
+            AnonymousPipeServerStream
+                HalEventTx = CreatePipeToArgument("haleventi", false),
+                HalEventRx = CreatePipeToArgument("halevento", true);
             halEventPipe = new HalEventPipe(this, new BinaryWriter(HalEventTx), new BinaryReader(HalEventRx));
-
 
             //反射函数处理
             foreach (var func in typeof(VtmDev).GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance))
@@ -83,11 +80,20 @@ namespace IoTSimulate
                     }
                 }
             }
-            
-
-            
-           
         }
+        /// <summary>
+        /// 建立一个方向为In或者Out的匿名管道，并将管道的名字附加到-arg参数后面
+        /// </summary>
+        /// <param name="arg">管道名字对应的参数</param>
+        /// <param name="directionIn">管道方向，true是In，即从外部输入到这里的C#，false是Out，即输出到外部</param>
+        /// <returns>匿名管道(可转化为IO流)</returns>
+        private AnonymousPipeServerStream CreatePipeToArgument(string arg,bool directionIn)
+        {
+            var r = new AnonymousPipeServerStream(directionIn ? PipeDirection.In : PipeDirection.Out, HandleInheritability.Inheritable);
+            args += " -" + arg + " " + r.GetClientHandleAsString();
+            return r;
+        }
+
         /// <summary>
         /// 启动新进程，（如果有）终止旧进程
         /// </summary>
