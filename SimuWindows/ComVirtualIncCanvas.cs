@@ -43,7 +43,7 @@ namespace SimuWindows
             Background = Brushes.Gray;
             AddClickPoint(new RemoveClickPoint(0, 0, this));
 
-            AddClickPoint(comCanvas = new ComCanvas(110, 35, global, com));
+            AddClickPoint(comCanvas = new ComCanvas(100, 35, global, com));
 
             AddClickPoint(Button = new ClickEventPoint(10, 20) {
                 Height = 40,
@@ -61,13 +61,6 @@ namespace SimuWindows
             });
             Button.OnClickEvent += com.SendData;
         }
-
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-            base.OnMouseMove(e);
-            comCanvas.Update();
-        }
-
 
 
         public override void Remove()

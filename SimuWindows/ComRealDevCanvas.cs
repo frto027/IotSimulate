@@ -129,12 +129,6 @@ namespace SimuWindows
             
         }
 
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-            base.OnMouseMove(e);
-            comCvs.Update();
-        }
-
         public override void Remove()
         {
             comCvs?.Remove();

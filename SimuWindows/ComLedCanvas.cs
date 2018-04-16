@@ -84,7 +84,7 @@ namespace SimuWindows
             timer.Start();
 
             //添加一个Com口连接点
-            AddClickPoint(comCanvas = new ComCanvas(70, 40, manager,led.com));
+            AddClickPoint(comCanvas = new ComCanvas(60, 40, manager,led.com));
         }
 
         public void Update(object sender, EventArgs e)
@@ -92,12 +92,6 @@ namespace SimuWindows
             //显示LED A LED B到自身
             L1.Content = led.A.ToString();
             L2.Content = led.B.ToString();
-        }
-        //这里更新一下连线，以提升界面响应速度
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-            base.OnMouseMove(e);
-            comCanvas.Update();
         }
 
 

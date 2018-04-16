@@ -20,8 +20,11 @@ namespace SimuWindows
         WLDev dev;
         Canvas rootcvs;
         public double SignalDistance = 1000;
-
-        private Line line = new Line() { IsHitTestVisible = false,Stroke = Brushes.DarkOrange };
+        private const double SignalLineLength = 40;//信号线的长度
+        private Line line = new Line() { IsHitTestVisible = false, Stroke = Brushes.DarkOrange,
+            StrokeDashArray = new DoubleCollection(new double[] { 5,4,4,3,3,2,2,1,1,0.5,1,1,2,2,3,3 }),
+            StrokeThickness = 2
+        };
 
         private Canvas aimHost;
 
@@ -71,6 +74,12 @@ namespace SimuWindows
             {
                 Point p = TranslatePoint(new Point(0, 0), rootcvs);
                 Point p2 = aimHost.TranslatePoint(new Point(0, 0), rootcvs);
+
+                var offv = (p2 - p);
+                offv.Normalize();
+                offv *= SignalLineLength;
+                p2 = p + offv;
+
                 line.Visibility = Visibility.Visible;
                 line.X1 = p.X;
                 line.Y1 = p.Y;

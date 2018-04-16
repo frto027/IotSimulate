@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,7 @@ namespace SimuWindows
 
         public ComBase ComBase { get; }
 
+        private const double PointMargin = 5,PointR = 1;
         /// <summary>
         /// 构造函数
         /// </summary>
@@ -30,19 +32,45 @@ namespace SimuWindows
         /// <param name="comBase">绑定的串口</param>
         public ComCanvas(double x, double y, GlobalGUIManager globalGUIManager,ComBase comBase):base(x, y, globalGUIManager)
         {
-            Width = 10;
+            Width = 30;
             Height = 10;
-            Background = Brushes.DarkGray;
+            Background = Brushes.DimGray;
+
+            Children.Add(GetCircleByOffset(0));
+            Children.Add(GetCircleByOffset(-PointMargin));
+            Children.Add(GetCircleByOffset(PointMargin));
+
+            DragCanvas.MouseMoveAction += Update;
+
             this.ComBase = comBase;
         }
+
+        private Canvas GetCircleByOffset(double CenterX)
+        {
+            return new Canvas()
+            {
+                IsHitTestVisible = false,
+                Margin = new System.Windows.Thickness(Width / 2 + CenterX - PointR, Height / 2 - PointR, 0, 0),
+                Width = PointR * 2,
+                Height = PointR * 2,
+                Background = new DrawingBrush()
+                {
+                    Drawing = new GeometryDrawing()
+                    {
+                        //Pen = new Pen(Brushes.Red, 1),
+                        Brush = Brushes.WhiteSmoke,
+                        Geometry = new EllipseGeometry(new System.Windows.Point(PointR,PointR), PointR, PointR)
+                    }
+                }
+            };
+        }
+
         public override bool StartDrag()
         {
             return ConnectedConnector == null;
         }
         public override void EndDrag(ConnectClickPoint other)
         {
-            
-            
                 if (other is ComCanvas o)
                 {
                     if (ConnectedConnector == null && o.ConnectedConnector == null)
@@ -56,7 +84,7 @@ namespace SimuWindows
         }
 
 
-        System.Windows.Point anchor = new System.Windows.Point(5, 5);
+        System.Windows.Point anchor = new System.Windows.Point(15, 5);
 
         public override double X()
         {
@@ -76,6 +104,7 @@ namespace SimuWindows
 
         public void Remove()
         {
+            DragCanvas.MouseMoveAction -= Update;
             ConnectedConnector?.Remove();
         }
 

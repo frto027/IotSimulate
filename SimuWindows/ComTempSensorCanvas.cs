@@ -49,12 +49,7 @@ namespace SimuWindows
             tempSensor.Update();
         }
 
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-            base.OnMouseMove(e);
-            comCanvas.Update();
-            
-        }
+
 
         public override void Remove()
         {

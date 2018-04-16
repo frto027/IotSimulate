@@ -65,7 +65,7 @@ namespace SimuWindows
             //ComCanvas
             for(int i = 0; i < coms.Length; i++)
             {
-                coms[i] = new ComCanvas(30 + 20 * i, 310, global, dev.GetComPortBase(i));
+                coms[i] = new ComCanvas(30 + 50 * i, 310, global, dev.GetComPortBase(i));
                 AddClickPoint(coms[i]);
             }
 
