@@ -83,6 +83,9 @@
       <DependentUpon>LoadingForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="VtmDevCanvas.cs" />
+    <Compile Include="VtmModule\BlackModule.cs" />
+    <Compile Include="VtmModule\LedModule.cs" />
+    <Compile Include="VtmModule\VtmModule.cs" />
     <Compile Include="WirelessComHostCanvas.cs" />
     <Compile Include="WirelessComDevCanvas.cs" />
     <Compile Include="WirelessSignal.cs" />

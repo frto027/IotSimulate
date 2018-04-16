@@ -14,7 +14,7 @@
                     <MenuItem Header="退出" Click="MenuItem_File_Quit_Click"/>
                 </MenuItem>
                 <MenuItem Header="添加">
-                    <MenuItem Header="设备">
+                    
                         <MenuItem Header="虚拟串口"   Click="MenuItem_AddDev_Click" Tag="vcom" />
                         <MenuItem Header="虚拟数码管"  Click="MenuItem_AddDev_Click" Tag="vled"/>
                         <MenuItem Header="真实串口设备" Click="MenuItem_AddDev_Click" Tag="realcom" />
@@ -24,7 +24,7 @@
                             <MenuItem Header="WL串口终端" Click="MenuItem_AddDev_Click" Tag="wlcom" />
                             <MenuItem Header="WLHost串口终端" Click="MenuItem_AddDev_Click" Tag="wlhostcom" />
                         </MenuItem>
-                    </MenuItem>
+                    <Separator />
                     <MenuItem Header="用户环境" Click="MenuItem_AddDev_Click" Tag="roomenv" />
                 </MenuItem>
             </Menu>

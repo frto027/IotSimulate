@@ -37,5 +37,10 @@ namespace WLDevUnitTest
             char[] arr = { (char)50, (char)50, (char)50, (char)0, (char)50 };
             Console.WriteLine(new String(arr));
         }
+        [TestMethod]
+        public void TestSubclass()
+        {
+            Console.WriteLine(typeof(VtmDev) == (typeof(VtmDev)));
+        }
     }
 }
