@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using IoTSimulate;
 
 
@@ -14,6 +15,8 @@ namespace SimuWindows
 {
     /// <summary>
     /// 用于无线设备
+    /// 给WLDev提供到Host的绑定支持
+    /// 需要Children.Add到控件自身
     /// </summary>
     class WirelessSignal:Canvas
     {
@@ -28,6 +31,8 @@ namespace SimuWindows
 
         private Canvas aimHost;
 
+        DispatcherTimer timer = new DispatcherTimer();
+
         public WirelessSignal(Canvas rootcvs,WLDev dev,double x, double y)
         {
             this.IsHitTestVisible = false;
@@ -36,9 +41,18 @@ namespace SimuWindows
             Margin = new Thickness(x, y, 0, 0);
             rootcvs.Children.Add(line);
             DragCanvas.MouseMoveAction += UpdateMove;
+
+            timer.Tick += UpdateTick;
+            timer.Interval = TimeSpan.FromMilliseconds(200);
+            timer.Start();
         }
 
-        public void Update()
+        private void UpdateTick(object sender, EventArgs e)
+        {
+            Update();
+        }
+
+        private void Update()
         {
             WLHostDev host = null;
             Canvas aimhost = null;
@@ -90,6 +104,8 @@ namespace SimuWindows
 
         public void Remove()
         {
+            timer.Stop();
+            
             DragCanvas.MouseMoveAction -= UpdateMove;
             rootcvs.Children.Remove(line);
         }

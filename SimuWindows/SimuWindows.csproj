@@ -89,6 +89,8 @@
     <Compile Include="WirelessComHostCanvas.cs" />
     <Compile Include="WirelessComDevCanvas.cs" />
     <Compile Include="WirelessSignal.cs" />
+    <Compile Include="WLPackageDisplayCanvas.cs" />
+    <Compile Include="WLPackageSendCanvas.cs" />
     <Page Include="ComDevSetthingTipBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

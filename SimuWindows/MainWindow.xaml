@@ -14,16 +14,18 @@
                     <MenuItem Header="退出" Click="MenuItem_File_Quit_Click"/>
                 </MenuItem>
                 <MenuItem Header="添加">
-                    
-                        <MenuItem Header="虚拟串口"   Click="MenuItem_AddDev_Click" Tag="vcom" />
-                        <MenuItem Header="虚拟数码管"  Click="MenuItem_AddDev_Click" Tag="vled"/>
-                        <MenuItem Header="真实串口设备" Click="MenuItem_AddDev_Click" Tag="realcom" />
-                        <MenuItem Header="串口温度传感器" Click="MenuItem_AddDev_Click" Tag="tempsensorcom" />
-                        <MenuItem Header="VTM开发板" Click="MenuItem_AddDev_Click" Tag="vtm" />
-                        <MenuItem Header="WL无线网络">
-                            <MenuItem Header="WL串口终端" Click="MenuItem_AddDev_Click" Tag="wlcom" />
-                            <MenuItem Header="WLHost串口终端" Click="MenuItem_AddDev_Click" Tag="wlhostcom" />
-                        </MenuItem>
+                    <MenuItem Header="虚拟串口"   Click="MenuItem_AddDev_Click" Tag="vcom" />
+                    <MenuItem Header="虚拟数码管"  Click="MenuItem_AddDev_Click" Tag="vled"/>
+                    <MenuItem Header="真实串口设备" Click="MenuItem_AddDev_Click" Tag="realcom" />
+                    <MenuItem Header="串口温度传感器" Click="MenuItem_AddDev_Click" Tag="tempsensorcom" />
+                    <MenuItem Header="VTM开发板" Click="MenuItem_AddDev_Click" Tag="vtm" />
+                    <MenuItem Header="WL无线网络">
+                        <MenuItem Header="WL串口终端" Click="MenuItem_AddDev_Click" Tag="wlcom" />
+                        <MenuItem Header="WLHost串口终端" Click="MenuItem_AddDev_Click" Tag="wlhostcom" />
+                        <Separator />
+                        <MenuItem Header="WL Package Display" Click="MenuItem_AddDev_Click" Tag="wlpackagedisplay"/>
+                        <MenuItem Header="WL Package Sender" Click="MenuItem_AddDev_Click"  Tag="wlpackagesender" />
+                    </MenuItem>
                     <Separator />
                     <MenuItem Header="用户环境" Click="MenuItem_AddDev_Click" Tag="roomenv" />
                 </MenuItem>

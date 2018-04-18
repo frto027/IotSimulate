@@ -119,6 +119,12 @@ namespace SimuWindows
                     case "wlhostcom":
                         new WirelessComHostCanvas(GlobalGUIManager);
                         goto case CREATE_STATUS.OK;
+                    case "wlpackagedisplay":
+                        new WLPackageDisplayCanvas(GlobalGUIManager);
+                        goto case CREATE_STATUS.OK;
+                    case "wlpackagesender":
+                        new WLPackageSendCanvas(GlobalGUIManager);
+                        goto case CREATE_STATUS.OK;
                     case CREATE_STATUS.OK://已创建
                         TipInBase("已创建 " + m.Header);
                         break;

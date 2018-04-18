@@ -52,7 +52,6 @@ namespace SimuWindows
 
         private void Update(object sender, EventArgs e)
         {
-            signal.Update();
             WLCom.Update();
         }
 

@@ -111,6 +111,7 @@ namespace IoTSimulate
                         }
                         if(matchedHead == Head.Count())
                         {
+                            matchedHead = 0;//prepair for next
                             remainBody = PackageSize - Head.Count();//匹配到完整的头部
                             foreach (var b in Head)
                                 packages.Enqueue(b);
