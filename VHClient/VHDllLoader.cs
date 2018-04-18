@@ -13,6 +13,8 @@ namespace VHClient
             CB_LEDSET,
             CB_DO_HAL_EVENT,
             CB_GET_HAL_EVENT,
+            CB_BPWSN_READ,
+            CB_BPWSN_SEND,
             CB_COUNT
         };
 
