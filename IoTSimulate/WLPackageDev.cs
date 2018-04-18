@@ -13,6 +13,7 @@ namespace IoTSimulate
     public class WLPackageDev:WLDev
     {
         public const int PACKAGE_SIZE = 16;
+        public readonly static byte[] Head = { 0x55, 0xaa };
 
         PackageMaker maker = new PackageMaker(PACKAGE_SIZE); 
 
@@ -69,7 +70,7 @@ namespace IoTSimulate
     public class PackageMaker
     {
 
-        public readonly byte[] Head = { 0x55, 0xAA };
+        private readonly byte[] Head = WLPackageDev.Head;
 
         private int PackageSize;
 

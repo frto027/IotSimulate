@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BroadPackageWSN\BPWSNPackage.cs" />
     <Compile Include="ComDev.cs" />
     <Compile Include="ComTempSensor.cs" />
     <Compile Include="IEnviroment.cs" />
@@ -50,6 +51,7 @@
     <Compile Include="VtmDev_Comport.cs" />
     <Compile Include="VtmDev_Led.cs" />
     <Compile Include="VtmDev_LedLock.cs" />
+    <Compile Include="Vtm_BPWSN.cs" />
     <Compile Include="WLDev.cs" />
     <Compile Include="WLPackageDev.cs" />
     <Compile Include="WLCom.cs" />
