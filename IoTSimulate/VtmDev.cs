@@ -209,6 +209,10 @@ namespace IoTSimulate
                             if (str != null)
                                 break;
                         }
+                        if(str == null)
+                        {
+                            throw new ArgumentException("字符状态获取失败，不存在对应于" + r.evt + "的解析程序");
+                        }
                         output.Write(str);
                         output.Flush();
                     }

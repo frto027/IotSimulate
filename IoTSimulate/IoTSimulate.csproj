@@ -47,6 +47,7 @@
     <Compile Include="IDevices.cs" />
     <Compile Include="JobControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VtmDev_TrigKey.cs" />
     <Compile Include="VtmDev.cs" />
     <Compile Include="VtmDev_Comport.cs" />
     <Compile Include="VtmDev_Led.cs" />

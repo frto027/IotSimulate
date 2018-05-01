@@ -133,6 +133,8 @@ namespace SimuWindows
             if (!IsMouseDirectlyOver)
                 return;
             clickReady = true;
+
+            OnHalfClick();
         }
         protected sealed override void OnMouseLeave(MouseEventArgs e)
         {
@@ -149,6 +151,7 @@ namespace SimuWindows
             clickReady = false;
         }
         public abstract void OnClick();
+        public virtual void OnHalfClick() { }
     }
     /// <summary>
     /// 事件驱动的ClickPoint
@@ -156,13 +159,19 @@ namespace SimuWindows
     public class ClickEventPoint : ClickPoint
     {
         public event Action OnClickEvent;
+        public event Action OnHalfClickEvent;
         public ClickEventPoint(double x,double y) : base(x, y)
         {
 
         }
         public sealed override void OnClick()
         {
-            OnClickEvent();
+            OnClickEvent?.Invoke();
+        }
+
+        public sealed override void OnHalfClick()
+        {
+            OnHalfClickEvent?.Invoke();
         }
     }
 

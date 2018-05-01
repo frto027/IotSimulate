@@ -4,6 +4,7 @@
 #include "hal_time.h"
 #include "hal_led.h"
 #include "hal_bpwsn.h"
+#include "hal_key.h"
 
 void runA(){
 	for(int i=0;i<32;i++){
@@ -47,16 +48,29 @@ void runD(){
 		HalDelayMs(1000);
 	}
 }
-
-int main(){
-	/*
-	for(int i=0;i<0x10;i++){
-		HalLedNum(i%8,i);
-		HalDelayMs(1000);
+void runE(){
+	static uint8 buff[4];
+	if(HalKeyDown(KEY_A)){
+		buff[0]++;
 	}
-	*/
+	if(HalKeyDown(KEY_B)){
+		buff[1]++;
+	}
+	if(HalKeyDown(KEY_C)){
+		buff[2]++;
+	}
+	if(HalKeyDown(KEY_D)){
+		buff[3]++;
+	}
+	for(int i=0;i<4;i++){
+		HalLedNum(i*2,buff[i]>>4);
+		HalLedNum(i*2+1,buff[i]&0xF);
+	}
+	HalDelayMs(50);
+}
+int main(){
 	while(1){
-		runD();
+		runE();
 	}
 	return 0;
 }
