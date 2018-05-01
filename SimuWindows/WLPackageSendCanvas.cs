@@ -63,6 +63,15 @@ namespace SimuWindows
 
         private void Submit()
         {
+            textBoxes[0].Value = 0x55;
+            textBoxes[1].Value = 0xaa;
+            byte chk = 0;
+            for(int i=0;i<textBoxes.Length - 1; i++)
+            {
+                chk += textBoxes[i].Value;
+            }
+            textBoxes[textBoxes.Length - 1].Value = chk;
+
             byte[] pkg =
                 (from box in textBoxes select box.Value).ToArray();
             dev.SendPackage(pkg, 0, true);
@@ -79,7 +88,10 @@ namespace SimuWindows
         private class NumberOnlyTextBox : TextBox
         {
             private byte value;
-            public byte Value { get { LimitText(); return value; } }
+            public byte Value { get { LimitText(); return value; } set {
+                    Text = value + "";
+                    LimitText(true);
+                } }
             public NumberOnlyTextBox()
             {
                 Text = "0";

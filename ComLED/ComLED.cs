@@ -13,7 +13,7 @@ namespace ComLED
     public class ComLED
     {
         byte text = 0;
-
+        public int count = 0;
         public char A
         {
             get
@@ -56,6 +56,7 @@ namespace ComLED
             {
                 if (len > 0)
                     led.text = data[offset + len - 1];
+                led.count += len;
             }
         }
     }

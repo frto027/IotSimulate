@@ -18,7 +18,7 @@ namespace SimuWindows
     /// </summary>
     class VtmDevCanvas : DragCanvas
     {
-        VtmDev dev;
+        public VtmDev dev;
         GlobalGUIManager global;
 
 
@@ -86,7 +86,7 @@ namespace SimuWindows
             RunButton.OnClickEvent += Run;
 
             //BlackModule
-            BlackModule = VtmModule.BlackModule.NewBlackModules(this);
+            BlackModule = VtmModule.BlackModule.NewBlackModules(this,global);
             foreach(var m in BlackModule)
             {
                 Children.Add(m.Value);
@@ -104,7 +104,7 @@ namespace SimuWindows
             {
                 return "无法创建\n类型不匹配：" + type.ToString();
             }
-            var Constructor = type.GetConstructor(new Type[] { typeof(VtmDev) });
+            var Constructor = type.GetConstructor(new Type[] { typeof(VtmDev),typeof(GlobalGUIManager) });
             if(Constructor == null)
             {
                 return "构造函数不匹配\n找不到参数为VtmDev的构造函数";
@@ -132,7 +132,7 @@ namespace SimuWindows
             {
                 return "位置不足";
             }
-            VtmModuleBase module = Constructor.Invoke(new object[] { dev }) as VtmModuleBase;
+            VtmModuleBase module = Constructor.Invoke(new object[] { dev,global }) as VtmModuleBase;
             if(module == null)
             {
                 return "创建对象失败";

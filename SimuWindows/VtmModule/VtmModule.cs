@@ -38,7 +38,7 @@ namespace SimuWindows.VtmModule
             {Position.D,new Tuple<double, double>(100,100) },
         };
 
-        public VtmModuleBase(VtmDev dev)
+        public VtmModuleBase(VtmDev dev,GlobalGUIManager global)
         {
             //IsHitTestVisible = false;
             Cursor = Cursors.Cross;

@@ -15,7 +15,7 @@ namespace SimuWindows.VtmModule
         readonly byte[] leds = new byte[VtmDev.LED_COUNT];
         LedCanvasControl[] LedCanvasControls = new LedCanvasControl[VtmDev.LED_COUNT];
 
-        public LedModule(VtmDev dev) : base(dev)
+        public LedModule(VtmDev dev,GlobalGUIManager global) : base(dev,global)
         {
             //LED CANVAS
             for (int i = 0; i < leds.Length; i++)

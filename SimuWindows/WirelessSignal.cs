@@ -33,6 +33,8 @@ namespace SimuWindows
 
         DispatcherTimer timer = new DispatcherTimer();
 
+        private const double VisualRadius = 5;
+
         public WirelessSignal(Canvas rootcvs,WLDev dev,double x, double y)
         {
             this.IsHitTestVisible = false;
@@ -41,6 +43,21 @@ namespace SimuWindows
             Margin = new Thickness(x, y, 0, 0);
             rootcvs.Children.Add(line);
             DragCanvas.MouseMoveAction += UpdateMove;
+
+            Children.Add(new Canvas()
+            {
+                Margin = new Thickness(-VisualRadius, -VisualRadius, 0, 0),
+                Width = 2 * VisualRadius,
+                Height = 2 * VisualRadius,
+                Background = new DrawingBrush()
+                {
+                    Drawing = new GeometryDrawing()
+                    {
+                        Brush = Brushes.Brown,
+                        Geometry = new EllipseGeometry(new Point(VisualRadius, VisualRadius), VisualRadius, VisualRadius)
+                    }
+                }
+            });
 
             timer.Tick += UpdateTick;
             timer.Interval = TimeSpan.FromMilliseconds(200);

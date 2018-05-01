@@ -1,3 +1,3 @@
-@set PATH=..\..\gnu\bin;%PATH%
+@set "PATH=..\..\gnu\bin;%PATH%"
 @make
 @pause

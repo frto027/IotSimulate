@@ -14,26 +14,30 @@ namespace SimuWindows.VtmModule
     class BlackModule : VtmModuleBase
     {
 
-        public static IDictionary<Position, BlackModule> NewBlackModules(VtmDevCanvas canvas)
+        public static IDictionary<Position, BlackModule> NewBlackModules(VtmDevCanvas canvas,GlobalGUIManager global)
         {
             return new Dictionary<Position, BlackModule> {
-                { Position.A,new BlackModule(null,Position.A,canvas) },
-                { Position.B,new BlackModule(null,Position.B,canvas) },
-                {Position.C,new BlackModule(null,Position.C,canvas) },
-                {Position.D,new BlackModule(null,Position.D,canvas) }
+                { Position.A,new BlackModule(null,Position.A,canvas,global) },
+                { Position.B,new BlackModule(null,Position.B,canvas,global) },
+                {Position.C,new BlackModule(null,Position.C,canvas,global) },
+                {Position.D,new BlackModule(null,Position.D,canvas,global) }
             };
         }
 
         private static Tuple<Type, string>[] ModuleList = new Tuple<Type,string>[] {
             new Tuple<Type,string>(typeof(LedModule),"数码管"),
+            new Tuple<Type, string>(typeof(BpwsnModule),"Wireless天线")
         };
 
         private List<MenuItem> menuItems = new List<MenuItem>();
 
         VtmDevCanvas VtmDevCanvas;
 
-        public BlackModule(VtmDev dev,Position position,VtmDevCanvas canvas) : base(dev)
+        GlobalGUIManager global;
+
+        public BlackModule(VtmDev dev,Position position,VtmDevCanvas canvas,GlobalGUIManager global) : base(dev,global)
         {
+            this.global = global;
             VtmDevCanvas = canvas;
             Children.Add(new Label() { Content = position.ToString()});
 
@@ -64,7 +68,11 @@ namespace SimuWindows.VtmModule
 
         private void AddModule(Type t)
         {
-            VtmDevCanvas.AddModule(t, false, position);
+            String ret = VtmDevCanvas.AddModule(t, false, position);
+            if(ret != null)
+            {
+                global.TipText("模块创建失败\n" + ret);
+            }
         }
 
         protected override void OnContextMenuOpening(ContextMenuEventArgs e)

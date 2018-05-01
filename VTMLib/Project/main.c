@@ -3,6 +3,7 @@
 #include "hal_uart.h"
 #include "hal_time.h"
 #include "hal_led.h"
+#include "hal_bpwsn.h"
 
 void runA(){
 	for(int i=0;i<32;i++){
@@ -32,6 +33,21 @@ void runC(){
 		HalDelayMs(400);
 	}
 }
+
+void runD(){
+	union BpwsnPackage pkg;
+	for(int i=0;i<HAL_BPWSN_MESSAGE_SIZE;i++){
+		pkg.msg[i]=0;
+	}
+	for(int i=0;i<HAL_BPWSN_MESSAGE_SIZE * 10;i++){
+		pkg.msg[i%HAL_BPWSN_MESSAGE_SIZE]=i%0x100;
+		
+		HalBpwsnSumPackage(&pkg);
+		HalBpwsnSendPackage(&pkg);
+		HalDelayMs(1000);
+	}
+}
+
 int main(){
 	/*
 	for(int i=0;i<0x10;i++){
@@ -40,7 +56,7 @@ int main(){
 	}
 	*/
 	while(1){
-		runC();
+		runD();
 	}
 	return 0;
 }

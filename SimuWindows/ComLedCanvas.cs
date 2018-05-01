@@ -18,7 +18,7 @@ namespace SimuWindows
         DispatcherTimer timer = new DispatcherTimer();
         public ComLED.ComLED led = new ComLED.ComLED();
         private Canvas c1, c2;
-        private Label L1, L2;
+        private Label L1, L2,Lcount;
 
         private ComCanvas comCanvas;
         public ComLedCanvas(GlobalGUIManager manager) : base(manager.rootcvs)
@@ -71,9 +71,15 @@ namespace SimuWindows
                 },
                 Margin = new System.Windows.Thickness(20, 20, 0, 0)
             };
+            Lcount = new Label()
+            {
+                Margin = new Thickness(10, 60, 0, 0)
+            };
+
 
             Children.Add(c1);
             Children.Add(c2);
+            Children.Add(Lcount);
 
             dragList.Add(c1);//当鼠标在从c1 c2上按下时也要响应拖拽
             dragList.Add(c2);
@@ -92,6 +98,7 @@ namespace SimuWindows
             //显示LED A LED B到自身
             L1.Content = led.A.ToString();
             L2.Content = led.B.ToString();
+            Lcount.Content = "count:" + led.count;
         }
 
 

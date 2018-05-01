@@ -46,7 +46,7 @@ namespace IoTSimulate
             private PipeStream istr, ostr;
             private WLPackageDev packageDev;
 
-            Task task;
+            Task<int> task;
             private byte[] buff = new byte[WLPackageDev.PACKAGE_SIZE];
 
             public BPWSN_DevicePipe(PipeStream instr,PipeStream outstr,WLPackageDev packageDev)
@@ -54,27 +54,19 @@ namespace IoTSimulate
                 istr = instr;
                 ostr = outstr;
                 this.packageDev = packageDev;
-
+                //ostr from packageDev
                 packageDev.OnPackageArrive = (pkg) =>
                 {
                     foreach (var b in pkg)
                         ostr.WriteByte(b);
+                    ostr.Flush();
                 };
-                ostr.Flush();
                 NextRead();
             }
-
             private void NextRead()
             {
                 task?.Dispose();
-                task = new Task(() =>
-                {
-                    for(int i = 0; i < buff.Length; i++)
-                    {
-                        buff[i] = (byte)istr.ReadByte();
-                    }
-                });
-                task.Start();
+                task = istr.ReadAsync(buff, 0, buff.Length);
             }
 
             public void Update()
@@ -83,7 +75,7 @@ namespace IoTSimulate
                 //istr to packageDev
                 if (task.IsCompleted)
                 {
-                    packageDev.SendPackage(buff, 0, true);
+                    packageDev.SendMessage(buff, 0, task.Result);
                     NextRead();
                 }
             }

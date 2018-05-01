@@ -84,6 +84,7 @@
     </Compile>
     <Compile Include="VtmDevCanvas.cs" />
     <Compile Include="VtmModule\BlackModule.cs" />
+    <Compile Include="VtmModule\BpwsnModule.cs" />
     <Compile Include="VtmModule\LedModule.cs" />
     <Compile Include="VtmModule\VtmModule.cs" />
     <Compile Include="WirelessComHostCanvas.cs" />
