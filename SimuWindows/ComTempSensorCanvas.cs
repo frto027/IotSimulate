@@ -21,6 +21,8 @@ namespace SimuWindows
 
         public ComTempSensorCanvas(GlobalGUIManager global) : base(global.rootcvs)
         {
+            EnviromentCanvas.EnvSetableList.Add(this);
+
             Width = 130;Height = 60;
             AddClickPoint(new RemoveClickPoint(0, 0, this));
 
@@ -55,6 +57,7 @@ namespace SimuWindows
         {
             timer.Stop();
             comCanvas.Remove();
+            EnviromentCanvas.EnvSetableList.Remove(this);
             base.Remove();
         }
 

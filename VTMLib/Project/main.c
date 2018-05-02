@@ -5,6 +5,7 @@
 #include "hal_led.h"
 #include "hal_bpwsn.h"
 #include "hal_key.h"
+#include "hal_sensor.h"
 
 void runA(){
 	for(int i=0;i<32;i++){
@@ -34,7 +35,7 @@ void runC(){
 		HalDelayMs(400);
 	}
 }
-
+//bpwsn test
 void runD(){
 	union BpwsnPackage pkg;
 	for(int i=0;i<HAL_BPWSN_MESSAGE_SIZE;i++){
@@ -48,6 +49,7 @@ void runD(){
 		HalDelayMs(1000);
 	}
 }
+//KeyTest
 void runE(){
 	static uint8 buff[4];
 	if(HalKeyDown(KEY_A)){
@@ -68,9 +70,56 @@ void runE(){
 	}
 	HalDelayMs(50);
 }
+
+void HalLedNumDot(uint8 led,uint8 value){
+	const static unsigned char HalLedTable[]={
+		0x3f,0x06,0x5b,0x4f,
+		0x66,0x6d,0x7d,0x07,
+		0x7f,0x6f,0x77,0x7c,
+		0x39,0x5e,0x79,0x71
+	};
+	HalLedSet(led,HalLedTable[value%0x10] | 0x80);
+}
+
+void runF(){
+	float tem;
+	int i;
+	tem	= HalTemGet();
+	
+	if(tem < 0){
+		HalLedSet(0,0x40);//-
+		tem = - tem;
+	}
+	else{
+		HalLedSet(0,0x00);
+	}
+	
+	
+	i = (int)tem;
+	tem -= i;
+	
+	for(int k=0;k<3;k++){
+		if(k == 0){
+			HalLedNumDot(3 - k,i%10);
+		}
+		else{
+			if(i != 0)
+				HalLedNum(3 - k,i%10);
+			else
+				HalLedSet(3 - k,0x00);
+		}
+		i/=10;
+	}
+	for(int k=4;k<8;k++){
+		tem *= 10;
+		HalLedNum(k,(int)tem);
+		tem -= (int)tem;
+	}
+	HalDelayMs(100);
+}
 int main(){
 	while(1){
-		runE();
+		runF();
 	}
 	return 0;
 }

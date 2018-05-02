@@ -17,6 +17,11 @@ namespace SimuWindows
     /// </summary>
     class EnviromentCanvas:DragCanvas,IEnviroment
     {
+        /// <summary>
+        /// 所有的需要获取环境信息的物体，请把自己加入到这个列表中
+        /// </summary>
+        public static readonly IList<IEnviromentSetable> EnvSetableList = new List<IEnviromentSetable>();
+
         DispatcherTimer updateTimer = new DispatcherTimer();
 
         Canvas rootcvs;
@@ -122,7 +127,7 @@ namespace SimuWindows
         {
             updateTimer.Stop();
 
-            foreach (IEnviromentSetable sd in rootcvs.Children.OfType<IEnviromentSetable>())
+            foreach (IEnviromentSetable sd in EnvSetableList)
             {
                 sd.CancelEnv(this);
             }
@@ -154,7 +159,7 @@ namespace SimuWindows
 
         public void UpdateEnviroments()
         {
-            foreach(IEnviromentSetable sd in rootcvs.Children.OfType<IEnviromentSetable>())
+            foreach(IEnviromentSetable sd in EnvSetableList)
             {
                 float x, y;
                 sd.GetXY(out x, out y);

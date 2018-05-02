@@ -27,6 +27,7 @@ namespace SimuWindows.VtmModule
         private static Tuple<Type, string>[] ModuleList = new Tuple<Type,string>[] {
             new Tuple<Type,string>(typeof(LedModule),"数码管"),
             new Tuple<Type, string>(typeof(KeyModule),"按键模块"),
+            new Tuple<Type, string>(typeof(TemSensorModule),"温度传感器"),
             new Tuple<Type, string>(typeof(BpwsnModule),"Wireless天线")
         };
 
