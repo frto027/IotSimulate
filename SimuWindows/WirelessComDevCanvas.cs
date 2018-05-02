@@ -23,7 +23,8 @@ namespace SimuWindows
         {
             Height = 60;
             Width = 180;
-            Background = Brushes.AliceBlue;
+            SetupBackgrountStyle();
+
             //Remove
             AddClickPoint(new RemoveClickPoint(0, 0, this));
 

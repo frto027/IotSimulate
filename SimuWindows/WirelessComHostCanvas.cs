@@ -32,7 +32,7 @@ namespace SimuWindows
             Width = 250;
             Height = 60;
 
-            Background = Brushes.OrangeRed;
+            SetupBackgrountStyle();
 
             rootcvs = global.rootcvs;
             maskcvs = global.maskcvs;

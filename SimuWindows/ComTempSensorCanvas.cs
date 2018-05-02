@@ -26,19 +26,20 @@ namespace SimuWindows
             Width = 130;Height = 60;
             AddClickPoint(new RemoveClickPoint(0, 0, this));
 
-            Background = Brushes.DarkGreen;
+            SetupBackgrountStyle();
 
             Label titleLabel = new Label()
             {
                 Margin = new Thickness(20, 1, 0, 0),
-                Content = "TEMP SENSOR",
+                Content = "温度传感器",
+                FontSize = 20,
                 IsHitTestVisible = false
             };
             Children.Add(titleLabel);
             
 
 
-            comCanvas = new ComCanvas(30, 30, global, tempSensor);
+            comCanvas = new ComCanvas(30, 40, global, tempSensor);
             AddClickPoint(comCanvas);
 
             timer.Tick += Update;

@@ -19,9 +19,7 @@ namespace SimuWindows
         };
         ClickEventPoint warrButton = new ClickEventPoint(100, 110)
         {
-            Width = 20,
-            Height = 20,
-            Background = Brushes.Orange
+            Width = 20,Height = 20,Background = IconRes.PowerWarrImgBrush
         };
         ClickEventPoint closeButton = new ClickEventPoint(100, 110) {
             Width = 20,Height = 20,Background = IconRes.PowerOnImgBrush

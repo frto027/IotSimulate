@@ -64,7 +64,7 @@ namespace SimuWindows
         {
             Width = 200;
             Height = 80;
-            Background = Brushes.Orange;
+            SetupBackgrountStyle(Colors.Black, Colors.Orange);
 
             rootcvs = manager.rootcvs;
 

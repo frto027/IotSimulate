@@ -214,5 +214,11 @@
   <ItemGroup>
     <Resource Include="Icons\ic_power_settings_new_black_on_48dp.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\ic_clear_black_48dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\ic_power_settings_new_black_warr_48dp.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

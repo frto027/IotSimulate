@@ -34,6 +34,7 @@ namespace SimuWindows
         {
             Margin = new Thickness(85, 0, 0, 0),
             IsHitTestVisible = false,
+            Visibility = Visibility.Collapsed,
             Content = "Ready",
             Background = Brushes.YellowGreen
         };
@@ -42,9 +43,9 @@ namespace SimuWindows
 
         DispatcherTimer timer = new DispatcherTimer();
 
-        ClickEventPoint RunButton = new ClickEventPoint(60, 0)
+        ClickEventPoint RunButton = new ClickEventPoint(50, 5)
         {
-            Background = Brushes.Green,
+            Background = IconRes.PowerOffImgBrush,
             Width = 20,Height = 20
         };
 
@@ -54,9 +55,9 @@ namespace SimuWindows
 
             Width = 500;
             Height = 360;
-            Background = Brushes.WhiteSmoke;
+            SetupBackgrountStyle();
 
-            AddClickPoint(new RemoveClickPoint(0, 0, this));
+            AddClickPoint(new RemoveClickPoint(3, 3, this));
             AddClickPoint(RunButton);
             
             Children.Add(StatusLabel);
@@ -65,7 +66,7 @@ namespace SimuWindows
             //ComCanvas
             for(int i = 0; i < coms.Length; i++)
             {
-                coms[i] = new ComCanvas(30 + 50 * i, 310, global, dev.GetComPortBase(i));
+                coms[i] = new ComCanvas(30 + 50 * i, 270, global, dev.GetComPortBase(i));
                 AddClickPoint(coms[i]);
             }
 
@@ -75,7 +76,7 @@ namespace SimuWindows
                 Content = "VTM-C",
                 FontSize = 30,
                 Foreground = Brushes.SlateBlue,
-                Margin = new Thickness(20, 320, 0, 0),
+                Margin = new Thickness(20, 290, 0, 0),
                 IsHitTestVisible = false
             });
             
@@ -216,7 +217,7 @@ namespace SimuWindows
             {
                 dev.Start();
                 timer.Start();
-                RunButton.Background = Brushes.Red;
+                RunButton.Background = IconRes.PowerOnImgBrush;
                 StatusLabel.Content = "Running";
                 StatusLabel.Background = Brushes.Green;
             }
@@ -234,7 +235,7 @@ namespace SimuWindows
             {
                 StatusLabel.Content = "Stop";
                 StatusLabel.Background = Brushes.Red;
-                RunButton.Background = Brushes.Green;
+                RunButton.Background = IconRes.PowerOffImgBrush;
                 timer.Stop();
                 return;
             }

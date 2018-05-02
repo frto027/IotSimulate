@@ -16,6 +16,12 @@ namespace SimuWindows
         ComVirInc com = new ComVirInc();
         ComCanvas comCanvas;
         ClickEventPoint Button;
+
+        Label nextLabel = new Label() {
+            Margin = new Thickness(20, 50, 0, 0),
+            IsHitTestVisible = false
+        };
+
         public ComVirtualIncCanvas(GlobalGUIManager global) : base(global.rootcvs)
         {
             //初始化一个TitleCvs用于显示标题
@@ -31,7 +37,7 @@ namespace SimuWindows
 
             SetupBackgrountStyle();
 
-            AddClickPoint(new RemoveClickPoint(0, 0, this));
+            AddClickPoint(new RemoveClickPoint(3, 3, this));
 
             AddClickPoint(comCanvas = new ComCanvas(100, 35, global, com));
 
@@ -52,13 +58,25 @@ namespace SimuWindows
 
             Button.SetupBackgrountStyle();
 
-            Button.OnClickEvent += com.SendData;
+            Button.OnClickEvent += SendData;
+
+            Children.Add(nextLabel);
+            UpdateNextLabel();
+        }
+        private void UpdateNextLabel()
+        {
+            nextLabel.Content = "next:" + com.NextOut;
         }
 
+        private void SendData()
+        {
+            com.SendData();
+            UpdateNextLabel();
+        }
 
         public override void Remove()
         {
-            Button.OnClickEvent -= com.SendData;
+            Button.OnClickEvent -= SendData;
             com.Close();
             comCanvas.Remove();
             base.Remove();

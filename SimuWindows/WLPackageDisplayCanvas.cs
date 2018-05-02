@@ -25,7 +25,7 @@ namespace SimuWindows
             //title
             Children.Add(new Label()
             {
-                Content = "PackageDisplay",
+                Content = "PackageDisplay(DEBUG)",
                 Margin = new Thickness(40, 0, 0, 0),
                 IsHitTestVisible = false
 

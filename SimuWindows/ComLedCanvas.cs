@@ -37,7 +37,7 @@ namespace SimuWindows
             });
 
 
-            AddClickPoint(new RemoveClickPoint(0, 0, this));
+            AddClickPoint(new RemoveClickPoint(3, 3, this));
 
             L1 = new Label()
             {
