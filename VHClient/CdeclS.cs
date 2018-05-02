@@ -38,10 +38,10 @@ namespace VHClient
     delegate void CdeclActionByteByte(byte a,byte b);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    delegate void CdeclActionByteA([MarshalAs(UnmanagedType.LPArray,SizeConst = 1024)]byte[] a);
+    unsafe delegate void CdeclActionByteA(byte* a);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    delegate void CdeclActionByteAByteA([MarshalAs(UnmanagedType.LPArray,SizeConst = 1024)]byte[] a, [MarshalAs(UnmanagedType.LPArray,SizeConst = 1024)]byte[] b);
+    unsafe delegate void CdeclActionByteAByteA(byte* a,byte* b);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     delegate byte CdeclFuncByteByte(byte x);

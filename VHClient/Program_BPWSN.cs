@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO.Pipes;
+using System.Runtime.InteropServices;
 
 namespace VHClient
 {
@@ -12,7 +13,7 @@ namespace VHClient
         private const int BPWSN_PACKAGE_SIZE = 16;
 
         private static PipeStream BPWSN_Rx, BPWSN_Tx;
-        static void BPWSN_Read(byte[] b)
+        unsafe static void BPWSN_Read(byte* b)
         {
             for(int i = 0; i < BPWSN_PACKAGE_SIZE; i++)
             {
@@ -20,8 +21,9 @@ namespace VHClient
             }
         }
 
-        static void BPWSN_Send(byte[] b)
+        unsafe static void BPWSN_Send(byte* b)
         {
+            
             for(int i = 0; i < BPWSN_PACKAGE_SIZE; i++)
             {
                 BPWSN_Tx?.WriteByte(b[i]);

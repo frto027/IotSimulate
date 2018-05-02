@@ -47,13 +47,16 @@ namespace VHClient
                 //设置回调函数，用来和虚拟环境交互,必须使用CdeclFunc(有返回值)或者CdeclAction(无返回值)，不能使用普通的Func和Action
                 //loader.SetupLinks(VHDllLoader.CallBacks.CB_USART_READ, new CdeclFuncInt(Pipe_USART_Read));
                 //loader.SetupLinks(VHDllLoader.CallBacks.CB_USART_WRITE, new CdeclActionInt(Pipe_USART_Write));
-                loader.SetupLinks(VHDllLoader.CallBacks.CB_UART_READ, new CdeclFuncByteByte(Pipe_UartRead));
-                loader.SetupLinks(VHDllLoader.CallBacks.CB_UART_WRITE, new CdeclActionByteByte(Pipe_UartWrite));
-                loader.SetupLinks(VHDllLoader.CallBacks.CB_LEDSET, new CdeclActionByteByte(Pipe_LedSet));
-                loader.SetupLinks(VHDllLoader.CallBacks.CB_DO_HAL_EVENT, new CdeclActionByteA(DoHalEvent));
-                loader.SetupLinks(VHDllLoader.CallBacks.CB_GET_HAL_EVENT, new CdeclActionByteAByteA(GetHalEvent));
-                loader.SetupLinks(VHDllLoader.CallBacks.CB_BPWSN_READ, new CdeclActionByteA(BPWSN_Read));
-                loader.SetupLinks(VHDllLoader.CallBacks.CB_BPWSN_SEND, new CdeclActionByteA(BPWSN_Send));
+                unsafe
+                {
+                    loader.SetupLinks(VHDllLoader.CallBacks.CB_UART_READ, new CdeclFuncByteByte(Pipe_UartRead));
+                    loader.SetupLinks(VHDllLoader.CallBacks.CB_UART_WRITE, new CdeclActionByteByte(Pipe_UartWrite));
+                    loader.SetupLinks(VHDllLoader.CallBacks.CB_LEDSET, new CdeclActionByteByte(Pipe_LedSet));
+                    loader.SetupLinks(VHDllLoader.CallBacks.CB_DO_HAL_EVENT, new CdeclActionByteA(DoHalEvent));
+                    loader.SetupLinks(VHDllLoader.CallBacks.CB_GET_HAL_EVENT, new CdeclActionByteAByteA(GetHalEvent));
+                    loader.SetupLinks(VHDllLoader.CallBacks.CB_BPWSN_READ, new CdeclActionByteA(BPWSN_Read));
+                    loader.SetupLinks(VHDllLoader.CallBacks.CB_BPWSN_SEND, new CdeclActionByteA(BPWSN_Send));
+                }
                 //这里已经在运行
                 int r = loader.RunMain();
 

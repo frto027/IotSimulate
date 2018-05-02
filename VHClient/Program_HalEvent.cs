@@ -30,7 +30,7 @@ namespace VHClient
             }
         }
 
-        private static void StringToArr(string str, byte[] arr)//arr不安全
+        private unsafe static void StringToArr(string str, byte* arr)//arr不安全
         {
             int i = 0;
             foreach (char c in str)
@@ -39,27 +39,22 @@ namespace VHClient
             }
             arr[i++] = 0;
         }
-        //Bug:arr在C语言中长度不知，所以有问题，这里arr数组长度[不安全]！
-        private static string ArrToString(byte[] arr)
+
+
+        private unsafe static string ArrToString(byte* arr)
         {
             StringBuilder stringBuilder = new StringBuilder();
-            foreach (byte b in arr)
+            while(*arr != 0)
             {
-                if (b != 0)
-                {
-                    stringBuilder.Append((char)b);
-                }
-                else
-                {
-                    break;
-                }
+                stringBuilder.Append((char)*arr);
+                arr++;
             }
             return stringBuilder.ToString();
         }
 
         //TODO：此函数应该由SetupLinks绑定到C++的某个函数，并将evt映射到某个函数内部
         //输入：evt，C#收到此消息后需要改变相应的硬件状态
-        private static void DoHalEvent(byte[] evt)//数组长度[不安全]
+        private unsafe static void DoHalEvent(byte* evt)
         {
             //这个函数被C++调用
             //通知C#虚拟端执行某个事件
@@ -70,7 +65,7 @@ namespace VHClient
         //TODO:此函数应由SetupLinks绑定到某个函数
         //输入：evt，表示查询字符串，C#在HalRx收到这个之后必须从HalTx发送状态
         //输出：ret，表示结果的字符串，由C#的HalTx发送，VHPipe.dll的C++代码解析
-        private static void GetHalEvent(byte[] evt, byte[] ret)//数组长度[不安全]
+        private unsafe static void GetHalEvent(byte* evt, byte* ret)//数组长度[不安全]
         {
             //这个函数被C++调用，用于获取某个虚拟硬件状态，并将结果填充到ret里面
             HalEventTxWriter?.Write(false);//false表示get请求返回状态
