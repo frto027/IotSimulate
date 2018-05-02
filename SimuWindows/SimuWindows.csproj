@@ -71,6 +71,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="IconRes.cs" />
     <Compile Include="LedCanvasControl.xaml.cs">
       <DependentUpon>LedCanvasControl.xaml</DependentUpon>
     </Compile>
@@ -203,6 +204,15 @@
     <Resource Include="LEDImg\LED_Light_F.png" />
     <Resource Include="LEDImg\LED_Light_G.png" />
     <Resource Include="LEDImg\LED_Light_H.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\ic_delete_forever_black_48dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\ic_power_settings_new_black_off_48dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\ic_power_settings_new_black_on_48dp.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

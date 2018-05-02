@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace SimuWindows
 {
@@ -49,6 +50,21 @@ namespace SimuWindows
             /*
              * 子类重写构造函数，并设置Height，With，Background
              * */
+        }
+        protected void SetupBackgrountStyle() { SetupBackgrountStyle(Colors.Black); }
+        protected void SetupBackgrountStyle(Color color,byte alp = 0x9F) { SetupBackgrountStyle(color, Colors.White); }
+        protected void SetupBackgrountStyle(Color color,Color colorB,byte alp = 0x9F)
+        {
+            colorB.A = alp;
+            Background = new DrawingBrush()
+            {
+                Drawing = new GeometryDrawing()
+                {
+                    Geometry = new RectangleGeometry(new Rect(0, 0, Width, Height), 2, 2),
+                    Pen = new Pen(new SolidColorBrush(color), 1),
+                    Brush = new SolidColorBrush(colorB)
+                }
+            };
         }
 
         protected sealed override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
@@ -126,6 +142,22 @@ namespace SimuWindows
             Margin = new Thickness(x, y, 0, 0);
             Cursor = Cursors.Hand;
         }
+
+        public void SetupBackgrountStyle() { SetupBackgrountStyle(Colors.Transparent); }
+        public void SetupBackgrountStyle(Color color) { SetupBackgrountStyle(color, Colors.Transparent); }
+        public void SetupBackgrountStyle(Color color, Color colorB)
+        {
+            Background = new DrawingBrush()
+            {
+                Drawing = new GeometryDrawing()
+                {
+                    Geometry = new RectangleGeometry(new Rect(0, 0, Width, Height), 2, 2),
+                    Pen = new Pen(new SolidColorBrush(color), 1),
+                    Brush = new SolidColorBrush(colorB)
+                }
+            };
+        }
+
         private bool clickReady = false;
         protected sealed override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
@@ -236,7 +268,8 @@ namespace SimuWindows
             this.aim = aim;
             Width = 20;
             Height = 20;
-            Background = new SolidColorBrush(Colors.Red);
+            
+            Background = IconRes.RemoveButtonBrush;
         }
 
         public override void OnClick()

@@ -19,46 +19,39 @@ namespace SimuWindows
         public ComVirtualIncCanvas(GlobalGUIManager global) : base(global.rootcvs)
         {
             //初始化一个TitleCvs用于显示标题
-            Canvas titleCvs = new Canvas
-            {
-                Margin = new Thickness(30, 0, 0, 0),
-                Height = 25,
-                Width = 80,
-                Background = new VisualBrush
-                {
-
-                    Stretch = Stretch.Uniform,
-                    Visual = new Label
-                    {
-                        Content = "VirIncCom"
-                    }
-                }
-            };
-            Children.Add(titleCvs);
-            dragList.Add(titleCvs);
-
+            Children.Add(new Label() {
+                IsHitTestVisible = false,
+                Content = "VirIncCom",
+                FontSize = 20,
+                Margin = new Thickness(25,0,0,0)
+            });
 
             Height = 80;
             Width = 140;
-            Background = Brushes.Gray;
+
+            SetupBackgrountStyle();
+
             AddClickPoint(new RemoveClickPoint(0, 0, this));
 
             AddClickPoint(comCanvas = new ComCanvas(100, 35, global, com));
 
-            AddClickPoint(Button = new ClickEventPoint(10, 20) {
+            AddClickPoint(Button = new ClickEventPoint(10, 30) {
                 Height = 40,
-                Width = 80,
-                
-                Background = new VisualBrush()
-                {
-                    Visual = new Label
-                    {
-                        Content = "Send",
-                        Foreground = Brushes.Green
-                    }
-                },
+                Width = 60,
                 
             });
+
+            Button.Children.Add(new Label()
+            {
+                Margin = new Thickness(0, 0, 0, 0),
+                IsHitTestVisible = false,
+                FontSize = 20,
+                Content = "Send",
+                Foreground = Brushes.Green,
+            });
+
+            Button.SetupBackgrountStyle();
+
             Button.OnClickEvent += com.SendData;
         }
 

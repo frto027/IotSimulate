@@ -15,7 +15,7 @@ namespace SimuWindows
         ComCanvas comCvs;
 
         ClickEventPoint openButton = new ClickEventPoint(100, 110) {
-            Width = 20,Height = 20,Background = Brushes.Green
+            Width = 20,Height = 20,Background = IconRes.PowerOffImgBrush
         };
         ClickEventPoint warrButton = new ClickEventPoint(100, 110)
         {
@@ -24,7 +24,7 @@ namespace SimuWindows
             Background = Brushes.Orange
         };
         ClickEventPoint closeButton = new ClickEventPoint(100, 110) {
-            Width = 20,Height = 20,Background = Brushes.Red
+            Width = 20,Height = 20,Background = IconRes.PowerOnImgBrush
         };
 
         public ComRealDevCanvas(ComRealDevSetthings setthings ,GlobalGUIManager global) : base(global.rootcvs)
@@ -33,7 +33,8 @@ namespace SimuWindows
 
             Width = 140;
             Height = 140;
-            Background = Brushes.DarkBlue;
+
+            SetupBackgrountStyle();
             //title canvas
             Children.Add(new Label()
             {
@@ -46,7 +47,7 @@ namespace SimuWindows
             //info canvas
             Children.Add(new Label()
             {
-                Margin = new Thickness(10,40,0,0),
+                Margin = new Thickness(10,30,0,0),
                 IsHitTestVisible = false,
                 Content = String.Format("Com info:\nName:{0}\n" +
                    "bundrate:{1}\n" +
@@ -54,7 +55,7 @@ namespace SimuWindows
                    "stopbits:{3}\n" +
                    "parity:{4}", setthings.portName, setthings.baudrate, setthings.databits,
                    setthings.stopBits.ToString(), setthings.parity.ToString()),
-                Foreground = Brushes.OrangeRed
+                Foreground = Brushes.Black
             });
 
             try
