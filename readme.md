@@ -2,7 +2,10 @@
 
 本来是做一个可以仿真一些物联网设备的软件，可以通过串口和真实设备产生互动，目前只做了软件底层的构架，包括界面绘制、传感器接口抽象、以及使用C语言开发单片机程序的接口和环境等。
 
-This is a software aiming to simulate some IOT devices.The virtual devices can communicate with actual devices by SerialPort.
+# 乱七八糟的文档
+[这个链接](https://raw.githubusercontent.com/frto027/IotSimulate/master/files/report.docx)是一个能体现软件构架的文档，是之前在学校提交的文档的一部分。
+
+这个工程是自己编程的一个练习
 
 # 环境
 VS2017 WPF，单片机的模拟是C++编写的，需要用到C++。模拟的只有api，不是指令集的模拟。
